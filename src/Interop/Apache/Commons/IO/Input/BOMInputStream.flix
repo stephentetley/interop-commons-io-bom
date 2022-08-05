@@ -15,21 +15,29 @@
  */
 
 
-namespace Interop/System/File {
+namespace Interop/Apache/Commons/IO/Input {
 
     pub enum BOMInputStream[_: Region](##org.apache.commons.io.input.BOMInputStream)
+
+    instance Scoped[BOMInputStream] {
+        pub def regionOf(_: BOMInputStream[r]): Region[r] = () as Region[r]
+    }
 
 
 }
 
 
-namespace Interop/System/File/BOMInputStream {
+namespace Interop/Apache/Commons/IO/Input/BOMInputStream {
     
-    use Interop/System/File.BOMInputStream;
-    use Interop/System/File.BOMInputStream.{BOMInputStream};
+    use Interop/Apache/Commons/IO/Input.BOMInputStream;
+    use Interop/Apache/Commons/IO/Input.BOMInputStream.{BOMInputStream};
 
-    use Interop/System/File.BOM;
-    use Interop/System/File.BOM.{BOM};
+    use Interop/Apache/Commons/IO.ByteOrderMark;
+    use Interop/Apache/Commons/IO.ByteOrderMark.{ByteOrderMark};
+
+    pub def getHH(ins: BOMInputStream[r]): ##org.apache.commons.io.input.BOMInputStream = 
+        let BOMInputStream(ins1) = ins;
+        ins1
 
     pub def new(_: Region[r], ins: ##java.io.InputStream): BOMInputStream[r] \ Write(r) =
         import new org.apache.commons.io.input.BOMInputStream(##java.io.InputStream): ##org.apache.commons.io.input.BOMInputStream \ r as newBOMInputStream;
@@ -39,10 +47,10 @@ namespace Interop/System/File/BOMInputStream {
         import new org.apache.commons.io.input.BOMInputStream(##java.io.InputStream, Bool): ##org.apache.commons.io.input.BOMInputStream \ r as newBOMInputStream;
         BOMInputStream(newBOMInputStream(ins, incl))
 
-    pub def getBOM(ins: BOMInputStream[r]): BOM \ Read(r) = 
+    pub def getBOM(ins: BOMInputStream[r]): ByteOrderMark \ Read(r) = 
         import org.apache.commons.io.input.BOMInputStream.getBOM(): ##org.apache.commons.io.ByteOrderMark \ r;
         let BOMInputStream(ins1) = ins;
-        BOM(getBOM(ins1))
+        ByteOrderMark(getBOM(ins1))
 
     pub def getBOMCharsetName(ins: BOMInputStream[r]): String \ Read(r) = 
         import org.apache.commons.io.input.BOMInputStream.getBOMCharsetName(): String \ r;
