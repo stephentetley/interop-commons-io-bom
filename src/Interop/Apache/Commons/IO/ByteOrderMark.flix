@@ -49,7 +49,6 @@ namespace Interop/Apache/Commons/IO/ByteOrderMark {
     use Interop/Apache/Commons/IO.ByteOrderMark.{ByteOrderMark};
 
     pub def getHH(bom: ByteOrderMark): ##org.apache.commons.io.ByteOrderMark =
-        import org.apache.commons.io.ByteOrderMark.toString(): String & Pure;
         let ByteOrderMark(bom1) = bom;
         bom1
 
