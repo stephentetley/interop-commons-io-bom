@@ -29,11 +29,11 @@ namespace Interop/Apache/Commons/IO/Input {
 
 
     instance Interop/IO.SubInputStream[BOMInputStream] {
-        pub def ucast(s: BOMInputStream[r]): InputStream[r] = 
+        pub def toInputStream(s: BOMInputStream[r]): InputStream[r] = 
             let BOMInputStream(s1) = s;
             InputStream(s1 as ##java.io.InputStream)
 
-        pub def dcast(s: InputStream[r]): BOMInputStream[r] = 
+        pub def fromInputStream(s: InputStream[r]): BOMInputStream[r] = 
             let InputStream(s1) = s;
             BOMInputStream(s1 as ##org.apache.commons.io.input.BOMInputStream) 
     }
@@ -55,18 +55,18 @@ namespace Interop/Apache/Commons/IO/Input/BOMInputStream {
         let BOMInputStream(ins1) = ins;
         ins1
 
-    /// TODO - probably don't want region param...
+
     pub def new[r: Region, stream: Region -> Type](_: Region[r], ins: stream[r]): BOMInputStream[r] \ Write(r) with SubInputStream[stream] =
         import new org.apache.commons.io.input.BOMInputStream(##java.io.InputStream): ##org.apache.commons.io.input.BOMInputStream \ r as newBOMInputStream;
-        let ins1 = Interop/IO/InputStream.getHH(Interop/IO/SubInputStream.ucast(ins));
+        let ins1 = Interop/IO/InputStream.getHH(Interop/IO/SubInputStream.toInputStream(ins));
         BOMInputStream(newBOMInputStream(ins1))
 
-    /// TODO - probably don't want region param...
+
     pub def newWithInclude[r: Region, stream: Region -> Type](_: Region[r], 
                                                                 ins: stream[r], 
                                                                 incl: Bool): BOMInputStream[r] \ Write(r) with SubInputStream[stream] =
         import new org.apache.commons.io.input.BOMInputStream(##java.io.InputStream, Bool): ##org.apache.commons.io.input.BOMInputStream \ r as newBOMInputStream;
-        let ins1 = Interop/IO/InputStream.getHH(Interop/IO/SubInputStream.ucast(ins));
+        let ins1 = Interop/IO/InputStream.getHH(Interop/IO/SubInputStream.toInputStream(ins));
         BOMInputStream(newBOMInputStream(ins1, incl))
 
     pub def getBOM(ins: BOMInputStream[r]): ByteOrderMark \ Read(r) = 

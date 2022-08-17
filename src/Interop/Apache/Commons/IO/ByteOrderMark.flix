@@ -31,7 +31,7 @@ namespace Interop/Apache/Commons/IO {
         pub def hash(x: ByteOrderMark): Int32 = Interop/Apache/Commons/IO/ByteOrderMark.hashCode(x)
     }
 
-    instance Interop/Collections.Marshal[ByteOrderMark] {
+    instance Interop/Flix.Marshal[ByteOrderMark] {
         pub def toJavaObject(x: ByteOrderMark): ##java.lang.Object =
             let ByteOrderMark(x1) = x;
             x1 as ##java.lang.Object
