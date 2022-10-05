@@ -54,52 +54,52 @@ namespace Interop/Apache/Commons/IO/ByteOrderMark {
 
 
     pub def utf_8(): ByteOrderMark = 
-        import static get org.apache.commons.io.ByteOrderMark.UTF_8: ##org.apache.commons.io.ByteOrderMark & Pure as get_UTF_8;
+        import static get org.apache.commons.io.ByteOrderMark.UTF_8: ##org.apache.commons.io.ByteOrderMark \ {} as get_UTF_8;
         ByteOrderMark(get_UTF_8())
 
     pub def utf_16be(): ByteOrderMark = 
-        import static get org.apache.commons.io.ByteOrderMark.UTF_16BE: ##org.apache.commons.io.ByteOrderMark & Pure as get_UTF_16BE;
+        import static get org.apache.commons.io.ByteOrderMark.UTF_16BE: ##org.apache.commons.io.ByteOrderMark \ {} as get_UTF_16BE;
         ByteOrderMark(get_UTF_16BE())
 
     pub def utf_16le(): ByteOrderMark = 
-        import static get org.apache.commons.io.ByteOrderMark.UTF_16LE: ##org.apache.commons.io.ByteOrderMark & Pure as get_UTF_16LE;
+        import static get org.apache.commons.io.ByteOrderMark.UTF_16LE: ##org.apache.commons.io.ByteOrderMark \ {} as get_UTF_16LE;
         ByteOrderMark(get_UTF_16LE())
 
     pub def utf_32be(): ByteOrderMark = 
-        import static get org.apache.commons.io.ByteOrderMark.UTF_32BE: ##org.apache.commons.io.ByteOrderMark & Pure as get_UTF_32BE;
+        import static get org.apache.commons.io.ByteOrderMark.UTF_32BE: ##org.apache.commons.io.ByteOrderMark \ {} as get_UTF_32BE;
         ByteOrderMark(get_UTF_32BE())
 
     pub def utf_32le(): ByteOrderMark = 
-        import static get org.apache.commons.io.ByteOrderMark.UTF_32LE: ##org.apache.commons.io.ByteOrderMark & Pure as get_UTF_32LE;
+        import static get org.apache.commons.io.ByteOrderMark.UTF_32LE: ##org.apache.commons.io.ByteOrderMark \ {} as get_UTF_32LE;
         ByteOrderMark(get_UTF_32LE())
 
     pub def utf_bom(): Char = 
-        import static get org.apache.commons.io.ByteOrderMark.UTF_BOM: Char & Pure as get_UTF_BOM;
+        import static get org.apache.commons.io.ByteOrderMark.UTF_BOM: Char \ {} as get_UTF_BOM;
         get_UTF_BOM()
 
     pub def equals(x: ByteOrderMark, y: ByteOrderMark): Bool =
-        import org.apache.commons.io.ByteOrderMark.equals(##java.lang.Object): Bool & Pure;
+        import org.apache.commons.io.ByteOrderMark.equals(##java.lang.Object): Bool \ {};
         let ByteOrderMark(x1) = x;
         let ByteOrderMark(y1) = y;
         equals(x1, y1 as ##java.lang.Object)
 
     pub def toString(bom: ByteOrderMark): String =
-        import org.apache.commons.io.ByteOrderMark.toString(): String & Pure;
+        import org.apache.commons.io.ByteOrderMark.toString(): String \ {};
         let ByteOrderMark(bom1) = bom;
         toString(bom1)
 
     pub def hashCode(bom: ByteOrderMark): Int32 =
-        import org.apache.commons.io.ByteOrderMark.hashCode(): Int32 & Pure;
+        import org.apache.commons.io.ByteOrderMark.hashCode(): Int32 \ {};
         let ByteOrderMark(bom1) = bom;
         hashCode(bom1)
 
     pub def getCharsetName(bom: ByteOrderMark): String = 
-        import org.apache.commons.io.ByteOrderMark.getCharsetName(): String & Pure;
+        import org.apache.commons.io.ByteOrderMark.getCharsetName(): String \ {};
         let ByteOrderMark(bom1) = bom;
         getCharsetName(bom1)
 
     pub def length(bom: ByteOrderMark): Int32 = 
-        import org.apache.commons.io.ByteOrderMark.length(): Int32 & Pure;
+        import org.apache.commons.io.ByteOrderMark.length(): Int32 \ {};
         let ByteOrderMark(bom1) = bom;
         length(bom1)
 
@@ -110,7 +110,7 @@ namespace Interop/Apache/Commons/IO/ByteOrderMark {
 
 
     pub def getAt(ix: Int32, bom: ByteOrderMark): Int32 =
-        import org.apache.commons.io.ByteOrderMark.get(Int32): Int32 & Pure as get1;
+        import org.apache.commons.io.ByteOrderMark.get(Int32): Int32 \ {} as get1;
         let ByteOrderMark(bom1) = bom;
         get1(bom1, ix)
         

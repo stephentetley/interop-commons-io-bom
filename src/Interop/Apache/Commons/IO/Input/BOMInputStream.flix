@@ -84,24 +84,24 @@ namespace Interop/Apache/Commons/IO/Input/BOMInputStream {
         let BOMInputStream(ins1) = ins;
         hasBOM(ins1)
 
-    pub def mark(limit: Int32, ins: BOMInputStream[r]): Unit \ IO = 
-        import org.apache.commons.io.input.BOMInputStream.mark(Int32): Unit \ IO;
+    pub def mark!(limit: Int32, ins: BOMInputStream[r]): Unit \ Write(r) = 
+        import org.apache.commons.io.input.BOMInputStream.mark(Int32): Unit \ r;
         let BOMInputStream(ins1) = ins;
         mark(ins1, limit)
 
-    pub def read(ins: BOMInputStream[r]): Int32 \ {Read(r), IO } = 
-        import org.apache.commons.io.input.BOMInputStream.read(): Int32 \ IO;
+    pub def read!(ins: BOMInputStream[r]): Int32 \ {Read(r), Write(r) } = 
+        import org.apache.commons.io.input.BOMInputStream.read(): Int32 \ r;
         let BOMInputStream(ins1) = ins;
         read(ins1)
 
 
-    pub def reset(ins: BOMInputStream[r]): Unit \ IO = 
-        import org.apache.commons.io.input.BOMInputStream.reset(): Unit \ IO;
+    pub def reset!(ins: BOMInputStream[r]): Unit \ Write(r) = 
+        import org.apache.commons.io.input.BOMInputStream.reset(): Unit \ r;
         let BOMInputStream(ins1) = ins;
         reset(ins1)
 
-    pub def skip(n: Int64, ins: BOMInputStream[r]): Int64 \ IO = 
-        import org.apache.commons.io.input.BOMInputStream.skip(Int64): Int64 \ IO;
+    pub def skip!(n: Int64, ins: BOMInputStream[r]): Int64 \ Write(r) = 
+        import org.apache.commons.io.input.BOMInputStream.skip(Int64): Int64 \ r;
         let BOMInputStream(ins1) = ins;
         skip(ins1, n)
 
