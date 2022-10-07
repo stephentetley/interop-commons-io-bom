@@ -49,25 +49,23 @@ namespace Interop/Apache/Commons/IO/Input/BOMInputStream {
     use Interop/Apache/Commons/IO.ByteOrderMark;
     use Interop/Apache/Commons/IO.ByteOrderMark.{ByteOrderMark};
 
-    use Interop/IO.SubInputStream;
+    use Interop/IO.InputStream;
 
     pub def getHH(ins: BOMInputStream[r]): ##org.apache.commons.io.input.BOMInputStream = 
         let BOMInputStream(ins1) = ins;
         ins1
 
-
-    pub def new[r: Region, stream: Region -> Type](_: Region[r], ins: stream[r]): BOMInputStream[r] \ Write(r) with SubInputStream[stream] =
+    /// Take a new region or use existing?
+    pub def new(ins: InputStream[r]): BOMInputStream[r] \ Write(r) =
         import new org.apache.commons.io.input.BOMInputStream(##java.io.InputStream): ##org.apache.commons.io.input.BOMInputStream \ r as newBOMInputStream;
-        let ins1 = Interop/IO/InputStream.getHH(Interop/IO/SubInputStream.toInputStream(ins));
+        let ins1 = Interop/IO/InputStream.getHH(ins);
         BOMInputStream(newBOMInputStream(ins1))
 
 
-    pub def newWithInclude[r: Region, stream: Region -> Type](_: Region[r], 
-                                                                ins: stream[r], 
-                                                                incl: Bool): BOMInputStream[r] \ Write(r) with SubInputStream[stream] =
+    pub def newWithInclude(includeBOM: Bool, ins: InputStream[r]): BOMInputStream[r] \ Write(r) =
         import new org.apache.commons.io.input.BOMInputStream(##java.io.InputStream, Bool): ##org.apache.commons.io.input.BOMInputStream \ r as newBOMInputStream;
-        let ins1 = Interop/IO/InputStream.getHH(Interop/IO/SubInputStream.toInputStream(ins));
-        BOMInputStream(newBOMInputStream(ins1, incl))
+        let ins1 = Interop/IO/InputStream.getHH(ins);
+        BOMInputStream(newBOMInputStream(ins1, includeBOM))
 
     pub def getBOM(ins: BOMInputStream[r]): ByteOrderMark \ Read(r) = 
         import org.apache.commons.io.input.BOMInputStream.getBOM(): ##org.apache.commons.io.ByteOrderMark \ r;
