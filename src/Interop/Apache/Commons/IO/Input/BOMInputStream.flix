@@ -67,15 +67,30 @@ namespace Interop/Apache/Commons/IO/Input/BOMInputStream {
         let ins1 = Interop/IO/InputStream.getHH(ins);
         BOMInputStream(newBOMInputStream(ins1, includeBOM))
 
-    pub def getBOM(ins: BOMInputStream[r]): ByteOrderMark \ Read(r) = 
-        import org.apache.commons.io.input.BOMInputStream.getBOM(): ##org.apache.commons.io.ByteOrderMark \ r;
-        let BOMInputStream(ins1) = ins;
-        ByteOrderMark(getBOM(ins1))
+    pub def getBOM(ins: BOMInputStream[r]): Result[Option[ByteOrderMark], String] \ Read(r) = 
+        try {
+            import org.apache.commons.io.input.BOMInputStream.getBOM(): ##org.apache.commons.io.ByteOrderMark \ r;
+            let BOMInputStream(ins1) = ins;
+            getBOM(ins1) |> Object.toOption |> Option.map(ByteOrderMark) |> Ok 
+        } catch {
+            case ex: ##java.lang.Exception =>
+                import java.lang.Throwable.getMessage(): String \ {};
+                Err(getMessage(ex))
+        }
+        
 
-    pub def getBOMCharsetName(ins: BOMInputStream[r]): String \ Read(r) = 
-        import org.apache.commons.io.input.BOMInputStream.getBOMCharsetName(): String \ r;
-        let BOMInputStream(ins1) = ins;
-        getBOMCharsetName(ins1)
+    pub def getBOMCharsetName(ins: BOMInputStream[r]): Result[Option[String], String] \ Read(r) = 
+        try {
+            import org.apache.commons.io.input.BOMInputStream.getBOMCharsetName(): String \ r;
+            let BOMInputStream(ins1) = ins;
+            getBOMCharsetName(ins1) |> Object.toOption |> Ok
+        } catch {
+            case ex: ##java.lang.Exception =>
+                import java.lang.Throwable.getMessage(): String \ {};
+                Err(getMessage(ex))
+        }
+        
+
 
     pub def hasBOM(ins: BOMInputStream[r]): Bool \ Read(r) = 
         import org.apache.commons.io.input.BOMInputStream.hasBOM(): Bool \ r;

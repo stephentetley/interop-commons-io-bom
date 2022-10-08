@@ -41,10 +41,10 @@ namespace Jvm/Apache/Commons/IO/Input/BOMInputStream {
     //     let ins1 = Interop/IO/InputStream.getHH(Interop/IO/SubInputStream.toInputStream(ins));
     //     BOMInputStream(newBOMInputStream(ins1, incl))
 
-    pub def getBOM(ins: BOMInputStream[r]): ByteOrderMark \ Read(r) = 
+    pub def getBOM(ins: BOMInputStream[r]): Result[Option[ByteOrderMark], String] \ Read(r) = 
         Interop/Apache/Commons/IO/Input/BOMInputStream.getBOM(ins)
 
-    pub def getBOMCharsetName(ins: BOMInputStream[r]): String \ Read(r) = 
+    pub def getBOMCharsetName(ins: BOMInputStream[r]): Result[Option[String], String] \ Read(r) = 
         Interop/Apache/Commons/IO/Input/BOMInputStream.getBOMCharsetName(ins)
 
     pub def hasBOM(ins: BOMInputStream[r]): Bool \ Read(r) = 
@@ -63,7 +63,9 @@ namespace Jvm/Apache/Commons/IO/Input/BOMInputStream {
     pub def skip!(n: Int64, ins: BOMInputStream[r]): Int64 \ Write(r) = 
         Interop/Apache/Commons/IO/Input/BOMInputStream.skip!(n, ins)
 
-    pub def toString(cs: Charset, ins: BOMInputStream[r]): Result[String, String] \ Read(r) = 
+
+    /// Get remaining input...
+    pub def getString(cs: Charset, ins: BOMInputStream[r]): Result[String, String] \ Read(r) = 
         let ins1 = Interop/IO/SubInputStream.toInputStream(ins);
         Interop/Apache/Commons/IO/IOUtils.inputStreamToString(ins1, cs)
 
