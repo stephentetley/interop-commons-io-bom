@@ -90,32 +90,54 @@ namespace Interop/Apache/Commons/IO/Input/BOMInputStream {
                 Err(getMessage(ex))
         }
         
+    pub def hasBOM(ins: BOMInputStream[r]): Result[Bool, String] \ Read(r) = 
+        try {
+            import org.apache.commons.io.input.BOMInputStream.hasBOM(): Bool \ r;
+            let BOMInputStream(ins1) = ins;
+            hasBOM(ins1) |> Ok
+        } catch {
+            case ex: ##java.lang.Exception =>
+                import java.lang.Throwable.getMessage(): String \ {};
+                Err(getMessage(ex))
+        }
 
-
-    pub def hasBOM(ins: BOMInputStream[r]): Bool \ Read(r) = 
-        import org.apache.commons.io.input.BOMInputStream.hasBOM(): Bool \ r;
-        let BOMInputStream(ins1) = ins;
-        hasBOM(ins1)
 
     pub def mark!(limit: Int32, ins: BOMInputStream[r]): Unit \ Write(r) = 
         import org.apache.commons.io.input.BOMInputStream.mark(Int32): Unit \ r;
         let BOMInputStream(ins1) = ins;
         mark(ins1, limit)
 
-    pub def read!(ins: BOMInputStream[r]): Int32 \ {Read(r), Write(r) } = 
-        import org.apache.commons.io.input.BOMInputStream.read(): Int32 \ r;
-        let BOMInputStream(ins1) = ins;
-        read(ins1)
+    /// -1 for end-of-stream
+    pub def read!(ins: BOMInputStream[r]): Result[Int32, String] \ {Read(r), Write(r) } = 
+        try {
+            import org.apache.commons.io.input.BOMInputStream.read(): Int32 \ r;
+            let BOMInputStream(ins1) = ins;
+            read(ins1) |> Ok
+        } catch {
+            case ex: ##java.lang.Exception =>
+                import java.lang.Throwable.getMessage(): String \ {};
+                Err(getMessage(ex))
+        }
 
+    pub def reset!(ins: BOMInputStream[r]): Result[Unit, String] \ Write(r) = 
+        try {
+            import org.apache.commons.io.input.BOMInputStream.reset(): Unit \ r;
+            let BOMInputStream(ins1) = ins;
+            reset(ins1) |> Ok
+        } catch {
+            case ex: ##java.lang.Exception =>
+                import java.lang.Throwable.getMessage(): String \ {};
+                Err(getMessage(ex))
+        }
 
-    pub def reset!(ins: BOMInputStream[r]): Unit \ Write(r) = 
-        import org.apache.commons.io.input.BOMInputStream.reset(): Unit \ r;
-        let BOMInputStream(ins1) = ins;
-        reset(ins1)
-
-    pub def skip!(n: Int64, ins: BOMInputStream[r]): Int64 \ Write(r) = 
-        import org.apache.commons.io.input.BOMInputStream.skip(Int64): Int64 \ r;
-        let BOMInputStream(ins1) = ins;
-        skip(ins1, n)
-
+    pub def skip!(n: Int64, ins: BOMInputStream[r]): Result[Int64, String] \ Write(r) = 
+        try {
+            import org.apache.commons.io.input.BOMInputStream.skip(Int64): Int64 \ r;
+            let BOMInputStream(ins1) = ins;
+            skip(ins1, n) |> Ok
+        } catch {
+            case ex: ##java.lang.Exception =>
+                import java.lang.Throwable.getMessage(): String \ {};
+                Err(getMessage(ex))
+        }
 }

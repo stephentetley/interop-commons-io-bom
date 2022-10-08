@@ -47,20 +47,20 @@ namespace Jvm/Apache/Commons/IO/Input/BOMInputStream {
     pub def getBOMCharsetName(ins: BOMInputStream[r]): Result[Option[String], String] \ Read(r) = 
         Interop/Apache/Commons/IO/Input/BOMInputStream.getBOMCharsetName(ins)
 
-    pub def hasBOM(ins: BOMInputStream[r]): Bool \ Read(r) = 
+    pub def hasBOM(ins: BOMInputStream[r]): Result[Bool, String] \ Read(r) = 
         Interop/Apache/Commons/IO/Input/BOMInputStream.hasBOM(ins)
 
     pub def mark!(limit: Int32, ins: BOMInputStream[r]): Unit \ Write(r) = 
         Interop/Apache/Commons/IO/Input/BOMInputStream.mark!(limit, ins)
 
-    pub def read!(ins: BOMInputStream[r]): Int32 \ {Read(r), Write(r)} = 
+    pub def read!(ins: BOMInputStream[r]): Result[Int32, String] \ {Read(r), Write(r)} = 
         Interop/Apache/Commons/IO/Input/BOMInputStream.read!(ins)
 
 
-    pub def reset!(ins: BOMInputStream[r]): Unit \ Write(r) =
+    pub def reset!(ins: BOMInputStream[r]): Result[Unit, String] \ Write(r) =
         Interop/Apache/Commons/IO/Input/BOMInputStream.reset!(ins)
 
-    pub def skip!(n: Int64, ins: BOMInputStream[r]): Int64 \ Write(r) = 
+    pub def skip!(n: Int64, ins: BOMInputStream[r]): Result[Int64, String] \ Write(r) = 
         Interop/Apache/Commons/IO/Input/BOMInputStream.skip!(n, ins)
 
 
