@@ -18,11 +18,12 @@
 namespace Interop/Apache/Commons/IO/IOUtils {
     
     use Interop/IO.InputStream;
+    use Interop/IO.Reader;
     use Interop/NIO/Charset.Charset;
 
-    pub def inputStreamToString(s: InputStream[r], cs: Charset): Result[String, String] \ Read(r) = 
+    pub def toStringFromInputStream(s: InputStream[r], cs: Charset): Result[String, String] \ Read(r) = 
         try {
-            import static org.apache.commons.io.IOUtils.toString(##java.io.InputStream, ##java.nio.charset.Charset ): String \ r;
+            import static org.apache.commons.io.IOUtils.toString(##java.io.InputStream, ##java.nio.charset.Charset): String \ r;
             let s1 = Interop/IO/InputStream.getHH(s);
             let cs1 = Interop/NIO/Charset/Charset.getHH(cs);
             toString(s1, cs1) |> Ok
@@ -32,4 +33,14 @@ namespace Interop/Apache/Commons/IO/IOUtils {
                 Err(getMessage(ex))
         }
 
+    pub def toStringFromReader(rd: Reader[r]): Result[String, String] \ Read(r) = 
+        try {
+            import static org.apache.commons.io.IOUtils.toString(##java.io.Reader): String \ r;
+            let rd1 = Interop/IO/Reader.getHH(rd);
+            toString(rd1) |> Ok
+        } catch {
+            case ex: ##java.lang.Exception =>
+                import java.lang.Throwable.getMessage(): String \ {};
+                Err(getMessage(ex))
+        }
 }

@@ -38,6 +38,16 @@ namespace Interop/Apache/Commons/IO/Input {
             BOMInputStream(s1 as ##org.apache.commons.io.input.BOMInputStream) 
     }
 
+    instance Interop/Apache/Commons/IO/Input.SubProxyInputStream[BOMInputStream] {
+        pub def toProxyInputStream(s: BOMInputStream[r]): ProxyInputStream[r] = 
+            let BOMInputStream(s1) = s;
+            ProxyInputStream(s1 as ##org.apache.commons.io.input.ProxyInputStream)
+
+        pub def fromProxyInputStream(s: ProxyInputStream[r]): BOMInputStream[r] = 
+            let ProxyInputStream(s1) = s;
+            BOMInputStream(s1 as ##org.apache.commons.io.input.BOMInputStream) 
+    }
+
 }
 
 
