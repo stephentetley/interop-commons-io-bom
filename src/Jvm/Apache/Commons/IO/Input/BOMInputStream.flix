@@ -30,6 +30,7 @@ namespace Jvm/Apache/Commons/IO/Input/BOMInputStream {
     use Basis/NIO/File.Path;
     use Basis/NIO/File.OpenOption;
     use Basis/IO.InputStream;
+    use Basis/IO.BufferedReader;
     use Jvm/Apache/Commons/IO.ByteOrderMark;
     use Jvm/Apache/Commons/IO/Input.BOMInputStream;
     use Interop/Apache/Commons/IO/Input.ProxyInputStream;
@@ -109,5 +110,18 @@ namespace Jvm/Apache/Commons/IO/Input/BOMInputStream {
         let* _      = Basis/IO/InputStreamReader.close!(rd);
         Ok(ans)
     }
+
+    pub def bufferedReaderWithBOM(r: Region[r], path: Path): Result[BufferedReader[r], String] \ IO =
+        use Result.flatMap;
+        let* fis    = Basis/IO/FileInputStream.newWithPath(r, path);
+        let bomIns  = Basis/IO/FileInputStream.toInputStream(fis) |> new;
+        let* oname  = getBOMCharsetName(bomIns);
+        let* cs = match oname {
+            case None       => Basis/NIO/Charset/Charset.utf_16() |> Ok
+            case Some(name) => Basis/NIO/Charset/Charset.forName(name) |> Option.toOk("Unknown charset: ${name}")
+        };
+        let rd      = toInputStream(bomIns) |> flip(Basis/IO/InputStreamReader.newInputStreamReader, cs);
+        let ans     = Basis/IO/InputStreamReader.toReader(rd) |> Basis/IO/BufferedReader.newWithReader;
+        Ok(ans)
 
 }
