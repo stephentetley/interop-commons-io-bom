@@ -24,28 +24,28 @@ namespace Interop/Apache/Commons/IO/Input {
     pub enum BOMInputStream[_: Region](##org.apache.commons.io.input.BOMInputStream)
 
     instance Scoped[BOMInputStream] {
-        pub def regionOf(_: BOMInputStream[r]): Region[r] = () as Region[r]
+        pub def regionOf(_: BOMInputStream[r]): Region[r] = unsafe_cast () as Region[r]
     }
 
 
     instance Interop/IO.SubInputStream[BOMInputStream] {
         pub def toInputStream(s: BOMInputStream[r]): InputStream[r] = 
             let BOMInputStream(s1) = s;
-            InputStream(s1 as ##java.io.InputStream)
+            InputStream(unsafe_cast s1 as ##java.io.InputStream)
 
         pub def fromInputStream(s: InputStream[r]): BOMInputStream[r] = 
             let InputStream(s1) = s;
-            BOMInputStream(s1 as ##org.apache.commons.io.input.BOMInputStream) 
+            BOMInputStream(unsafe_cast s1 as ##org.apache.commons.io.input.BOMInputStream) 
     }
 
     instance Interop/Apache/Commons/IO/Input.SubProxyInputStream[BOMInputStream] {
         pub def toProxyInputStream(s: BOMInputStream[r]): ProxyInputStream[r] = 
             let BOMInputStream(s1) = s;
-            ProxyInputStream(s1 as ##org.apache.commons.io.input.ProxyInputStream)
+            ProxyInputStream(unsafe_cast s1 as ##org.apache.commons.io.input.ProxyInputStream)
 
         pub def fromProxyInputStream(s: ProxyInputStream[r]): BOMInputStream[r] = 
             let ProxyInputStream(s1) = s;
-            BOMInputStream(s1 as ##org.apache.commons.io.input.BOMInputStream) 
+            BOMInputStream(unsafe_cast s1 as ##org.apache.commons.io.input.BOMInputStream) 
     }
 
 }

@@ -24,7 +24,7 @@ namespace Interop/Apache/Commons/IO/Input {
     pub enum ProxyInputStream[_: Region](##org.apache.commons.io.input.ProxyInputStream)
 
     instance Scoped[ProxyInputStream] {
-        pub def regionOf(_: ProxyInputStream[r]): Region[r] = () as Region[r]
+        pub def regionOf(_: ProxyInputStream[r]): Region[r] = unsafe_cast () as Region[r]
     }
 
 
@@ -36,11 +36,11 @@ namespace Interop/Apache/Commons/IO/Input {
     instance Interop/IO.SubInputStream[ProxyInputStream] {
         pub def toInputStream(s: ProxyInputStream[r]): InputStream[r] = 
             let ProxyInputStream(s1) = s;
-            InputStream(s1 as ##java.io.InputStream)
+            InputStream(unsafe_cast s1 as ##java.io.InputStream)
 
         pub def fromInputStream(s: InputStream[r]): ProxyInputStream[r] = 
             let InputStream(s1) = s;
-            ProxyInputStream(s1 as ##org.apache.commons.io.input.ProxyInputStream) 
+            ProxyInputStream(unsafe_cast s1 as ##org.apache.commons.io.input.ProxyInputStream) 
     }
 
 }

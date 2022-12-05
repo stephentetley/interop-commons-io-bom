@@ -34,10 +34,10 @@ namespace Interop/Apache/Commons/IO {
     instance Interop/Flix.Marshal[ByteOrderMark] {
         pub def toJavaObject(x: ByteOrderMark): ##java.lang.Object =
             let ByteOrderMark(x1) = x;
-            x1 as ##java.lang.Object
+            unsafe_cast x1 as ##java.lang.Object
 
         pub def fromJavaObject(o: ##java.lang.Object): ByteOrderMark = 
-            ByteOrderMark(o as ##org.apache.commons.io.ByteOrderMark)
+            ByteOrderMark(unsafe_cast o as ##org.apache.commons.io.ByteOrderMark)
     }
 
 }
@@ -81,7 +81,7 @@ namespace Interop/Apache/Commons/IO/ByteOrderMark {
         import org.apache.commons.io.ByteOrderMark.equals(##java.lang.Object): Bool \ {};
         let ByteOrderMark(x1) = x;
         let ByteOrderMark(y1) = y;
-        equals(x1, y1 as ##java.lang.Object)
+        equals(x1, unsafe_cast y1 as ##java.lang.Object)
 
     pub def toString(bom: ByteOrderMark): String =
         import org.apache.commons.io.ByteOrderMark.toString(): String \ {};
