@@ -23,10 +23,6 @@ namespace Interop/Apache/Commons/IO/Input {
 
     pub enum BOMInputStream[_: Region](##org.apache.commons.io.input.BOMInputStream)
 
-    instance Scoped[BOMInputStream] {
-        pub def regionOf(_: BOMInputStream[r]): Region[r] = unsafe_cast () as Region[r]
-    }
-
 
     instance Interop/IO.SubInputStream[BOMInputStream] {
         pub def toInputStream(s: BOMInputStream[r]): InputStream[r] = 
@@ -77,7 +73,7 @@ namespace Interop/Apache/Commons/IO/Input/BOMInputStream {
         let ins1 = Interop/IO/InputStream.getHH(ins);
         BOMInputStream(newBOMInputStream(ins1, includeBOM))
 
-    pub def getBOM(ins: BOMInputStream[r]): Result[Option[ByteOrderMark], String] \ Read(r) = 
+    pub def getBOM(ins: BOMInputStream[r]): Result[String, Option[ByteOrderMark]] \ Read(r) = 
         try {
             import org.apache.commons.io.input.BOMInputStream.getBOM(): ##org.apache.commons.io.ByteOrderMark \ r;
             let BOMInputStream(ins1) = ins;
@@ -89,7 +85,7 @@ namespace Interop/Apache/Commons/IO/Input/BOMInputStream {
         }
         
 
-    pub def getBOMCharsetName(ins: BOMInputStream[r]): Result[Option[String], String] \ Read(r) = 
+    pub def getBOMCharsetName(ins: BOMInputStream[r]): Result[String, Option[String]] \ Read(r) = 
         try {
             import org.apache.commons.io.input.BOMInputStream.getBOMCharsetName(): String \ r;
             let BOMInputStream(ins1) = ins;
@@ -100,7 +96,7 @@ namespace Interop/Apache/Commons/IO/Input/BOMInputStream {
                 Err(getMessage(ex))
         }
         
-    pub def hasBOM(ins: BOMInputStream[r]): Result[Bool, String] \ Read(r) = 
+    pub def hasBOM(ins: BOMInputStream[r]): Result[String, Bool] \ Read(r) = 
         try {
             import org.apache.commons.io.input.BOMInputStream.hasBOM(): Bool \ r;
             let BOMInputStream(ins1) = ins;
@@ -118,7 +114,7 @@ namespace Interop/Apache/Commons/IO/Input/BOMInputStream {
         mark(ins1, limit)
 
     /// -1 for end-of-stream
-    pub def read!(ins: BOMInputStream[r]): Result[Int32, String] \ {Read(r), Write(r) } = 
+    pub def read!(ins: BOMInputStream[r]): Result[String, Int32] \ {Read(r), Write(r) } = 
         try {
             import org.apache.commons.io.input.BOMInputStream.read(): Int32 \ r;
             let BOMInputStream(ins1) = ins;
@@ -129,7 +125,7 @@ namespace Interop/Apache/Commons/IO/Input/BOMInputStream {
                 Err(getMessage(ex))
         }
 
-    pub def reset!(ins: BOMInputStream[r]): Result[Unit, String] \ Write(r) = 
+    pub def reset!(ins: BOMInputStream[r]): Result[String, Unit] \ Write(r) = 
         try {
             import org.apache.commons.io.input.BOMInputStream.reset(): Unit \ r;
             let BOMInputStream(ins1) = ins;
@@ -140,7 +136,7 @@ namespace Interop/Apache/Commons/IO/Input/BOMInputStream {
                 Err(getMessage(ex))
         }
 
-    pub def skip!(n: Int64, ins: BOMInputStream[r]): Result[Int64, String] \ Write(r) = 
+    pub def skip!(n: Int64, ins: BOMInputStream[r]): Result[String, Int64] \ Write(r) = 
         try {
             import org.apache.commons.io.input.BOMInputStream.skip(Int64): Int64 \ r;
             let BOMInputStream(ins1) = ins;

@@ -38,7 +38,7 @@ namespace Jvm/Apache/Commons/IO/Input/BOMInputStream {
     pub def new(ins: InputStream[r]): BOMInputStream[r] \ Write(r) = 
         Interop/Apache/Commons/IO/Input/BOMInputStream.new(ins)
 
-    pub def newBOMInputStream(r: Region[r], p: Path, opts: List[OpenOption]): Result[BOMInputStream[r], String] \ {IO, Write(r)} = 
+    pub def newBOMInputStream(r: Region[r], p: Path, opts: List[OpenOption]): Result[String, BOMInputStream[r]] \ {IO, Write(r)} = 
         Basis/NIO/File/Files.newInputStream(r, p, opts) |> Result.map(new)
 
 
@@ -55,16 +55,16 @@ namespace Jvm/Apache/Commons/IO/Input/BOMInputStream {
     //     let ins1 = Interop/IO/InputStream.getHH(Interop/IO/SubInputStream.toInputStream(ins));
     //     BOMInputStream(newBOMInputStream(ins1, incl))
 
-    pub def getBOM(ins: BOMInputStream[r]): Result[Option[ByteOrderMark], String] \ Read(r) = 
+    pub def getBOM(ins: BOMInputStream[r]): Result[String, Option[ByteOrderMark]] \ Read(r) = 
         Interop/Apache/Commons/IO/Input/BOMInputStream.getBOM(ins)
 
-    pub def getBOMCharsetName(ins: BOMInputStream[r]): Result[Option[String], String] \ Read(r) = 
+    pub def getBOMCharsetName(ins: BOMInputStream[r]): Result[String, Option[String]] \ Read(r) = 
         Interop/Apache/Commons/IO/Input/BOMInputStream.getBOMCharsetName(ins)
 
-    pub def hasBOM(ins: BOMInputStream[r]): Result[Bool, String] \ Read(r) = 
+    pub def hasBOM(ins: BOMInputStream[r]): Result[String, Bool] \ Read(r) = 
         Interop/Apache/Commons/IO/Input/BOMInputStream.hasBOM(ins)
 
-    pub def available(ins: BOMInputStream[r]): Result[Int32, String] \ Read(r) = 
+    pub def available(ins: BOMInputStream[r]): Result[String, Int32] \ Read(r) = 
         toProxyInputStream(ins) |> Interop/Apache/Commons/IO/Input/ProxyInputStream.available
 
 
@@ -76,18 +76,18 @@ namespace Jvm/Apache/Commons/IO/Input/BOMInputStream {
         toProxyInputStream(ins) |> Interop/Apache/Commons/IO/Input/ProxyInputStream.markSupported
 
 
-    pub def read!(ins: BOMInputStream[r]): Result[Int32, String] \ {Read(r), Write(r)} = 
+    pub def read!(ins: BOMInputStream[r]): Result[String, Int32] \ {Read(r), Write(r)} = 
         Interop/Apache/Commons/IO/Input/BOMInputStream.read!(ins)
 
 
-    pub def reset!(ins: BOMInputStream[r]): Result[Unit, String] \ Write(r) =
+    pub def reset!(ins: BOMInputStream[r]): Result[String, Unit] \ Write(r) =
         Interop/Apache/Commons/IO/Input/BOMInputStream.reset!(ins)
 
-    pub def skip!(n: Int64, ins: BOMInputStream[r]): Result[Int64, String] \ Write(r) = 
+    pub def skip!(n: Int64, ins: BOMInputStream[r]): Result[String, Int64] \ Write(r) = 
         Interop/Apache/Commons/IO/Input/BOMInputStream.skip!(n, ins)
 
 
-    pub def close!(ins: BOMInputStream[r]): Result[Unit, String] \ Write(r) = 
+    pub def close!(ins: BOMInputStream[r]): Result[String, Unit] \ Write(r) = 
         toProxyInputStream(ins) |> Interop/Apache/Commons/IO/Input/ProxyInputStream.close!
 
     /// Get remaining input...
@@ -96,32 +96,32 @@ namespace Jvm/Apache/Commons/IO/Input/BOMInputStream {
         Interop/Apache/Commons/IO/IOUtils.toStringFromInputStream(ins1, cs)
 
 
-    pub def readStringWithBOM(path: Path): Result[String, String] \ IO = region r1 {
+    pub def readStringWithBOM(path: Path): Result[String, String] \ IO = region rc {
         use Result.flatMap;
-        let* fis    = Basis/IO/FileInputStream.newWithPath(r1, path);
+        let* fis    = Basis/IO/FileInputStream.newWithPath(rc, path);
         let bomIns  = Basis/IO/FileInputStream.toInputStream(fis) |> new;
         let* oname  = getBOMCharsetName(bomIns);
         let* cs = match oname {
             case None       => Basis/NIO/Charset/Charset.utf_16() |> Ok
             case Some(name) => Basis/NIO/Charset/Charset.forName(name) |> Option.toOk("Unknown charset: ${name}")
         };
-        let rd      = toInputStream(bomIns) |> flip(Basis/IO/InputStreamReader.newInputStreamReader, cs);
+        let rd      = toInputStream(bomIns) |> ins -> Basis/IO/InputStreamReader.newInputStreamReader(rc, ins, cs);
         let* ans    = Basis/IO/InputStreamReader.toReader(rd) |> Interop/Apache/Commons/IO/IOUtils.toStringFromReader;
         let* _      = Basis/IO/InputStreamReader.close!(rd);
         Ok(ans)
     }
 
-    pub def bufferedReaderWithBOM(r: Region[r], path: Path): Result[BufferedReader[r], String] \ IO =
+    pub def bufferedReaderWithBOM(rc: Region[r], path: Path): Result[String, BufferedReader[r]] \ IO =
         use Result.flatMap;
-        let* fis    = Basis/IO/FileInputStream.newWithPath(r, path);
+        let* fis    = Basis/IO/FileInputStream.newWithPath(rc, path);
         let bomIns  = Basis/IO/FileInputStream.toInputStream(fis) |> new;
         let* oname  = getBOMCharsetName(bomIns);
         let* cs = match oname {
             case None       => Basis/NIO/Charset/Charset.utf_16() |> Ok
             case Some(name) => Basis/NIO/Charset/Charset.forName(name) |> Option.toOk("Unknown charset: ${name}")
         };
-        let rd      = toInputStream(bomIns) |> flip(Basis/IO/InputStreamReader.newInputStreamReader, cs);
-        let ans     = Basis/IO/InputStreamReader.toReader(rd) |> Basis/IO/BufferedReader.newWithReader;
+        let rd      = toInputStream(bomIns) |> ins -> Basis/IO/InputStreamReader.newInputStreamReader(rc, ins, cs);
+        let ans     = Basis/IO/InputStreamReader.toReader(rd) |> Basis/IO/BufferedReader.newWithReader(rc);
         Ok(ans)
 
 }

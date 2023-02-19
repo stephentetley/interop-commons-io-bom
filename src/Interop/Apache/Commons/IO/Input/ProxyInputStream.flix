@@ -23,10 +23,6 @@ namespace Interop/Apache/Commons/IO/Input {
 
     pub enum ProxyInputStream[_: Region](##org.apache.commons.io.input.ProxyInputStream)
 
-    instance Scoped[ProxyInputStream] {
-        pub def regionOf(_: ProxyInputStream[r]): Region[r] = unsafe_cast () as Region[r]
-    }
-
 
     pub class SubProxyInputStream[t: Region -> Type] {
         pub def toProxyInputStream[r: Region](s: t[r]): ProxyInputStream[r]
@@ -76,7 +72,7 @@ namespace Interop/Apache/Commons/IO/Input/ProxyInputStream {
         mark(ins1, limit)
 
 
-    pub def available(ins: ProxyInputStream[r]): Result[Int32, String] \ Read(r) = 
+    pub def available(ins: ProxyInputStream[r]): Result[String, Int32] \ Read(r) = 
         try {
             import org.apache.commons.io.input.ProxyInputStream.available(): Int32 \ r;
             let ProxyInputStream(ins1) = ins;
@@ -94,7 +90,7 @@ namespace Interop/Apache/Commons/IO/Input/ProxyInputStream {
 
 
     /// -1 for end-of-stream
-    pub def read!(ins: ProxyInputStream[r]): Result[Int32, String] \ Read(r) = 
+    pub def read!(ins: ProxyInputStream[r]): Result[String, Int32] \ Read(r) = 
         try {
             import org.apache.commons.io.input.ProxyInputStream.read(): Int32 \ r;
             let ProxyInputStream(ins1) = ins;
@@ -105,7 +101,7 @@ namespace Interop/Apache/Commons/IO/Input/ProxyInputStream {
                 Err(getMessage(ex))
         }
 
-    pub def reset!(ins: ProxyInputStream[r]): Result[Unit, String] \ Write(r) = 
+    pub def reset!(ins: ProxyInputStream[r]): Result[String, Unit] \ Write(r) = 
         try {
             import org.apache.commons.io.input.ProxyInputStream.reset(): Unit \ r;
             let ProxyInputStream(ins1) = ins;
@@ -116,7 +112,7 @@ namespace Interop/Apache/Commons/IO/Input/ProxyInputStream {
                 Err(getMessage(ex))
         }
 
-    pub def skip!(n: Int64, ins: ProxyInputStream[r]): Result[Int64, String] \ Write(r) = 
+    pub def skip!(n: Int64, ins: ProxyInputStream[r]): Result[String, Int64] \ Write(r) = 
         try {
             import org.apache.commons.io.input.ProxyInputStream.skip(Int64): Int64 \ r;
             let ProxyInputStream(ins1) = ins;
@@ -127,7 +123,7 @@ namespace Interop/Apache/Commons/IO/Input/ProxyInputStream {
                 Err(getMessage(ex))
         }
 
-    pub def close!(ins: ProxyInputStream[r]): Result[Unit, String] \ Write(r) = 
+    pub def close!(ins: ProxyInputStream[r]): Result[String, Unit] \ Write(r) = 
         try {
             import org.apache.commons.io.input.ProxyInputStream.close(): Unit \ r;
             let ProxyInputStream(ins1) = ins;
