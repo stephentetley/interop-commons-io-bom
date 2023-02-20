@@ -17,9 +17,9 @@
 
 namespace Interop/Apache/Commons/IO/IOUtils {
     
-    use Interop/IO.InputStream;
-    use Interop/IO.Reader;
-    use Interop/NIO/Charset.Charset;
+    use Interop/IO.InputStream
+    use Interop/IO.Reader
+    use Interop/NIO/Charset.Charset
 
     pub def toStringFromInputStream(s: InputStream[r], cs: Charset): Result[String, String] \ Read(r) = 
         try {

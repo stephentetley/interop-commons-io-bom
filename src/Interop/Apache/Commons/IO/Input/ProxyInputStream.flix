@@ -17,8 +17,8 @@
 
 namespace Interop/Apache/Commons/IO/Input {
 
-    use Interop/IO.InputStream;
-    use Interop/IO.InputStream.{InputStream};
+    use Interop/IO.InputStream
+    use Interop/IO.InputStream.{InputStream}
 
 
     pub enum ProxyInputStream[_: Region](##org.apache.commons.io.input.ProxyInputStream)
@@ -44,21 +44,26 @@ namespace Interop/Apache/Commons/IO/Input {
 
 namespace Interop/Apache/Commons/IO/Input/ProxyInputStream {
     
-    use Interop/Apache/Commons/IO/Input.ProxyInputStream;
-    use Interop/Apache/Commons/IO/Input.ProxyInputStream.{ProxyInputStream};
+    use Interop/Apache/Commons/IO/Input.ProxyInputStream
+    use Interop/Apache/Commons/IO/Input.ProxyInputStream.{ProxyInputStream}
 
-    use Interop/Apache/Commons/IO.ByteOrderMark;
-    use Interop/Apache/Commons/IO.ByteOrderMark.{ByteOrderMark};
+    use Interop/Apache/Commons/IO.ByteOrderMark
+    use Interop/Apache/Commons/IO.ByteOrderMark.{ByteOrderMark}
 
-    use Interop/IO.InputStream;
+    use Interop/IO.InputStream
 
     pub def getHH(ins: ProxyInputStream[r]): ##org.apache.commons.io.input.ProxyInputStream = 
         let ProxyInputStream(ins1) = ins;
         ins1
 
+
+    pub def wrapHH(_: Region[r], prim: ##org.apache.commons.io.input.ProxyInputStream): ProxyInputStream[r] =
+        ProxyInputStream(prim)
+
+
     /// Take a new region or use existing?
-    pub def new(ins: InputStream[r]): ProxyInputStream[r] \ Write(r) =
-        import new org.apache.commons.io.input.ProxyInputStream(##java.io.InputStream): ##org.apache.commons.io.input.ProxyInputStream \ r as newProxyInputStream;
+    pub def new(_: Region[r], ins: InputStream[r]): ProxyInputStream[r1] \ { Read(r), Write(r1) } =
+        import new org.apache.commons.io.input.ProxyInputStream(##java.io.InputStream): ##org.apache.commons.io.input.ProxyInputStream \ {r, r1} as newProxyInputStream;
         let ins1 = Interop/IO/InputStream.getHH(ins);
         newProxyInputStream(ins1) |>  ProxyInputStream
 

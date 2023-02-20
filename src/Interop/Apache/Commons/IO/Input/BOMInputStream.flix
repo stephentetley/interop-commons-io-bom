@@ -17,8 +17,8 @@
 
 namespace Interop/Apache/Commons/IO/Input {
 
-    use Interop/IO.InputStream;
-    use Interop/IO.InputStream.{InputStream};
+    use Interop/IO.InputStream
+    use Interop/IO.InputStream.{InputStream}
 
 
     pub enum BOMInputStream[_: Region](##org.apache.commons.io.input.BOMInputStream)
@@ -61,15 +61,19 @@ namespace Interop/Apache/Commons/IO/Input/BOMInputStream {
         let BOMInputStream(ins1) = ins;
         ins1
 
-    /// Take a new region or use existing?
-    pub def new(ins: InputStream[r]): BOMInputStream[r] \ Write(r) =
-        import new org.apache.commons.io.input.BOMInputStream(##java.io.InputStream): ##org.apache.commons.io.input.BOMInputStream \ r as newBOMInputStream;
+    pub def wrapHH(_: Region[r], prim: ##org.apache.commons.io.input.BOMInputStream): BOMInputStream[r] =
+        BOMInputStream(prim)
+
+
+    /// Take a new region...
+    pub def new(_: Region[r1], ins: InputStream[r]): BOMInputStream[r1] \ { Read(r), Write(r1) } =
+        import new org.apache.commons.io.input.BOMInputStream(##java.io.InputStream): ##org.apache.commons.io.input.BOMInputStream \ {r, r1} as newBOMInputStream;
         let ins1 = Interop/IO/InputStream.getHH(ins);
         BOMInputStream(newBOMInputStream(ins1))
 
 
-    pub def newWithInclude(includeBOM: Bool, ins: InputStream[r]): BOMInputStream[r] \ Write(r) =
-        import new org.apache.commons.io.input.BOMInputStream(##java.io.InputStream, Bool): ##org.apache.commons.io.input.BOMInputStream \ r as newBOMInputStream;
+    pub def newWithInclude(_: Region[r1], includeBOM: Bool, ins: InputStream[r]): BOMInputStream[r1] \ { Read(r), Write(r1) } =
+        import new org.apache.commons.io.input.BOMInputStream(##java.io.InputStream, Bool): ##org.apache.commons.io.input.BOMInputStream \ {r, r1} as newBOMInputStream;
         let ins1 = Interop/IO/InputStream.getHH(ins);
         BOMInputStream(newBOMInputStream(ins1, includeBOM))
 

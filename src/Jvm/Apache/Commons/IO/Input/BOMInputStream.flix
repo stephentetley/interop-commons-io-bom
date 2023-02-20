@@ -35,11 +35,11 @@ namespace Jvm/Apache/Commons/IO/Input/BOMInputStream {
     use Jvm/Apache/Commons/IO/Input.BOMInputStream;
     use Interop/Apache/Commons/IO/Input.ProxyInputStream;
 
-    pub def new(ins: InputStream[r]): BOMInputStream[r] \ Write(r) = 
-        Interop/Apache/Commons/IO/Input/BOMInputStream.new(ins)
+    pub def new(rc: Region[r1], ins: InputStream[r]): BOMInputStream[r1] \ { Read(r), Write(r1) } = 
+        Interop/Apache/Commons/IO/Input/BOMInputStream.new(rc, ins)
 
-    pub def newBOMInputStream(r: Region[r], p: Path, opts: List[OpenOption]): Result[String, BOMInputStream[r]] \ {IO, Write(r)} = 
-        Basis/NIO/File/Files.newInputStream(r, p, opts) |> Result.map(new)
+    pub def newBOMInputStream(rc: Region[r], p: Path, opts: List[OpenOption]): Result[String, BOMInputStream[r]] \ {IO, Write(r)} = 
+        Basis/NIO/File/Files.newInputStream(rc, p, opts) |> Result.map(new(rc))
 
 
     def toInputStream(ins: BOMInputStream[r]): InputStream[r] = 
@@ -99,7 +99,7 @@ namespace Jvm/Apache/Commons/IO/Input/BOMInputStream {
     pub def readStringWithBOM(path: Path): Result[String, String] \ IO = region rc {
         use Result.flatMap;
         let* fis    = Basis/IO/FileInputStream.newWithPath(rc, path);
-        let bomIns  = Basis/IO/FileInputStream.toInputStream(fis) |> new;
+        let bomIns  = Basis/IO/FileInputStream.toInputStream(fis) |> new(rc);
         let* oname  = getBOMCharsetName(bomIns);
         let* cs = match oname {
             case None       => Basis/NIO/Charset/Charset.utf_16() |> Ok
@@ -114,7 +114,7 @@ namespace Jvm/Apache/Commons/IO/Input/BOMInputStream {
     pub def bufferedReaderWithBOM(rc: Region[r], path: Path): Result[String, BufferedReader[r]] \ IO =
         use Result.flatMap;
         let* fis    = Basis/IO/FileInputStream.newWithPath(rc, path);
-        let bomIns  = Basis/IO/FileInputStream.toInputStream(fis) |> new;
+        let bomIns  = Basis/IO/FileInputStream.toInputStream(fis) |> new(rc);
         let* oname  = getBOMCharsetName(bomIns);
         let* cs = match oname {
             case None       => Basis/NIO/Charset/Charset.utf_16() |> Ok
