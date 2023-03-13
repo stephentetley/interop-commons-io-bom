@@ -32,11 +32,11 @@ namespace Interop/Apache/Commons/IO/Input {
     instance Interop/IO.SubInputStream[ProxyInputStream] {
         pub def toInputStream(s: ProxyInputStream[r]): InputStream[r] = 
             let ProxyInputStream(s1) = s;
-            InputStream(unsafe_cast s1 as ##java.io.InputStream)
+            InputStream(unchecked_cast(s1 as ##java.io.InputStream))
 
         pub def fromInputStream(s: InputStream[r]): ProxyInputStream[r] = 
             let InputStream(s1) = s;
-            ProxyInputStream(unsafe_cast s1 as ##org.apache.commons.io.input.ProxyInputStream) 
+            ProxyInputStream(unchecked_cast(s1 as ##org.apache.commons.io.input.ProxyInputStream))
     }
 
 }

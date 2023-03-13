@@ -27,21 +27,21 @@ namespace Interop/Apache/Commons/IO/Input {
     instance Interop/IO.SubInputStream[BOMInputStream] {
         pub def toInputStream(s: BOMInputStream[r]): InputStream[r] = 
             let BOMInputStream(s1) = s;
-            InputStream(unsafe_cast s1 as ##java.io.InputStream)
+            InputStream(unchecked_cast(s1 as ##java.io.InputStream))
 
         pub def fromInputStream(s: InputStream[r]): BOMInputStream[r] = 
             let InputStream(s1) = s;
-            BOMInputStream(unsafe_cast s1 as ##org.apache.commons.io.input.BOMInputStream) 
+            BOMInputStream(unchecked_cast(s1 as ##org.apache.commons.io.input.BOMInputStream))
     }
 
     instance Interop/Apache/Commons/IO/Input.SubProxyInputStream[BOMInputStream] {
         pub def toProxyInputStream(s: BOMInputStream[r]): ProxyInputStream[r] = 
             let BOMInputStream(s1) = s;
-            ProxyInputStream(unsafe_cast s1 as ##org.apache.commons.io.input.ProxyInputStream)
+            ProxyInputStream(unchecked_cast(s1 as ##org.apache.commons.io.input.ProxyInputStream))
 
         pub def fromProxyInputStream(s: ProxyInputStream[r]): BOMInputStream[r] = 
             let ProxyInputStream(s1) = s;
-            BOMInputStream(unsafe_cast s1 as ##org.apache.commons.io.input.BOMInputStream) 
+            BOMInputStream(unchecked_cast(s1 as ##org.apache.commons.io.input.BOMInputStream))
     }
 
 }
