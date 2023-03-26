@@ -26,14 +26,14 @@ namespace Jvm/Apache/Commons/IO/Input {
 
 namespace Jvm/Apache/Commons/IO/Input/BOMInputStream {
     
-    use Basis/NIO/Charset.Charset;
-    use Basis/NIO/File.Path;
-    use Basis/NIO/File.OpenOption;
-    use Basis/IO.InputStream;
-    use Basis/IO.BufferedReader;
-    use Jvm/Apache/Commons/IO.ByteOrderMark;
-    use Jvm/Apache/Commons/IO/Input.BOMInputStream;
-    use Interop/Apache/Commons/IO/Input.ProxyInputStream;
+    use Basis/NIO/Charset.Charset
+    use Basis/NIO/File.Path
+    use Basis/NIO/File.OpenOption
+    use Basis/IO.InputStream
+    use Basis/IO.BufferedReader
+    use Jvm/Apache/Commons/IO.ByteOrderMark
+    use Jvm/Apache/Commons/IO/Input.BOMInputStream
+    use Interop/Apache/Commons/IO/Input.ProxyInputStream
 
     pub def new(rc: Region[r1], ins: InputStream[r]): BOMInputStream[r1] \ { Read(r), Write(r1) } = 
         Interop/Apache/Commons/IO/Input/BOMInputStream.new(rc, ins)

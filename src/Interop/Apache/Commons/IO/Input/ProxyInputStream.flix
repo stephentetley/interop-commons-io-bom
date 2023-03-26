@@ -19,6 +19,8 @@ namespace Interop/Apache/Commons/IO/Input {
 
     use Interop/IO.InputStream
     use Interop/IO.InputStream.{InputStream}
+    use Interop/Apache/Commons/IO/Input.ProxyInputStream
+    use Interop/Apache/Commons/IO/Input.ProxyInputStream.{ProxyInputStream}
 
 
     pub enum ProxyInputStream[_: Region](##org.apache.commons.io.input.ProxyInputStream)
@@ -78,15 +80,11 @@ namespace Interop/Apache/Commons/IO/Input/ProxyInputStream {
 
 
     pub def available(ins: ProxyInputStream[r]): Result[String, Int32] \ Read(r) = 
-        try {
+        Result.tryCatch(_ -> {
             import org.apache.commons.io.input.ProxyInputStream.available(): Int32 \ r;
             let ProxyInputStream(ins1) = ins;
-            available(ins1) |> Ok
-        } catch {
-            case ex: ##java.lang.Exception =>
-                import java.lang.Throwable.getMessage(): String \ {};
-                Err(getMessage(ex))
-        }
+            available(ins1)
+        })
 
     pub def markSupported(ins: ProxyInputStream[r]): Bool \ Read(r) = 
         import org.apache.commons.io.input.ProxyInputStream.markSupported(): Bool \ r;
@@ -96,48 +94,32 @@ namespace Interop/Apache/Commons/IO/Input/ProxyInputStream {
 
     /// -1 for end-of-stream
     pub def read!(ins: ProxyInputStream[r]): Result[String, Int32] \ Read(r) = 
-        try {
+        Result.tryCatch(_ -> {
             import org.apache.commons.io.input.ProxyInputStream.read(): Int32 \ r;
             let ProxyInputStream(ins1) = ins;
-            read(ins1) |> Ok
-        } catch {
-            case ex: ##java.lang.Exception =>
-                import java.lang.Throwable.getMessage(): String \ {};
-                Err(getMessage(ex))
-        }
+            read(ins1)
+        })
 
     pub def reset!(ins: ProxyInputStream[r]): Result[String, Unit] \ Write(r) = 
-        try {
+        Result.tryCatch(_ -> {
             import org.apache.commons.io.input.ProxyInputStream.reset(): Unit \ r;
             let ProxyInputStream(ins1) = ins;
-            reset(ins1) |> Ok
-        } catch {
-            case ex: ##java.lang.Exception =>
-                import java.lang.Throwable.getMessage(): String \ {};
-                Err(getMessage(ex))
-        }
+            reset(ins1)
+        })
 
     pub def skip!(n: Int64, ins: ProxyInputStream[r]): Result[String, Int64] \ Write(r) = 
-        try {
+        Result.tryCatch(_ -> {
             import org.apache.commons.io.input.ProxyInputStream.skip(Int64): Int64 \ r;
             let ProxyInputStream(ins1) = ins;
-            skip(ins1, n) |> Ok
-        } catch {
-            case ex: ##java.lang.Exception =>
-                import java.lang.Throwable.getMessage(): String \ {};
-                Err(getMessage(ex))
-        }
+            skip(ins1, n)
+        })
 
     pub def close!(ins: ProxyInputStream[r]): Result[String, Unit] \ Write(r) = 
-        try {
+        Result.tryCatch(_ -> {
             import org.apache.commons.io.input.ProxyInputStream.close(): Unit \ r;
             let ProxyInputStream(ins1) = ins;
-            close(ins1) |> Ok
-        } catch {
-            case ex: ##java.lang.Exception =>
-                import java.lang.Throwable.getMessage(): String \ {};
-                Err(getMessage(ex))
-        }
+            close(ins1)
+        })
 
 
 }

@@ -17,6 +17,9 @@
 
 namespace Interop/Apache/Commons/IO {
 
+    use Interop/Apache/Commons/IO.ByteOrderMark
+    use Interop/Apache/Commons/IO.ByteOrderMark.{ByteOrderMark}
+    
     pub enum ByteOrderMark(##org.apache.commons.io.ByteOrderMark)
 
     instance Eq[ByteOrderMark] {
@@ -45,8 +48,8 @@ namespace Interop/Apache/Commons/IO {
 
 namespace Interop/Apache/Commons/IO/ByteOrderMark {
     
-    use Interop/Apache/Commons/IO.ByteOrderMark;
-    use Interop/Apache/Commons/IO.ByteOrderMark.{ByteOrderMark};
+    use Interop/Apache/Commons/IO.ByteOrderMark
+    use Interop/Apache/Commons/IO.ByteOrderMark.{ByteOrderMark}
 
     pub def getHH(bom: ByteOrderMark): ##org.apache.commons.io.ByteOrderMark =
         let ByteOrderMark(bom1) = bom;
