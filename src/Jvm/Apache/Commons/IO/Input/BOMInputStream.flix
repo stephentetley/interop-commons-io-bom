@@ -97,31 +97,29 @@ namespace Jvm/Apache/Commons/IO/Input/BOMInputStream {
 
 
     pub def readStringWithBOM(path: Path): Result[String, String] \ IO = region rc {
-        use Result.flatMap;
-        let* fis    = Basis/IO/FileInputStream.newWithPath(rc, path);
-        let bomIns  = Basis/IO/FileInputStream.toInputStream(fis) |> new(rc);
-        let* oname  = getBOMCharsetName(bomIns);
-        let* cs = match oname {
-            case None       => Basis/NIO/Charset/Charset.utf_16() |> Ok
-            case Some(name) => Basis/NIO/Charset/Charset.forName(name) |> Option.toOk("Unknown charset: ${name}")
-        };
-        let rd      = toInputStream(bomIns) |> ins -> Basis/IO/InputStreamReader.newInputStreamReader(rc, ins, cs);
-        let* ans    = Basis/IO/InputStreamReader.toReader(rd) |> Interop/Apache/Commons/IO/IOUtils.toStringFromReader;
-        let* _      = Basis/IO/InputStreamReader.close!(rd);
-        Ok(ans)
+        forM (fis   <- Basis/IO/FileInputStream.newWithPath(rc, path);
+                bomIns  <- Ok(Basis/IO/FileInputStream.toInputStream(fis) |> new(rc));
+                oname   <- getBOMCharsetName(bomIns);
+                cs      <- match oname {
+                                case None       => Basis/NIO/Charset/Charset.utf_16() |> Ok
+                                case Some(name) => Basis/NIO/Charset/Charset.forName(name) |> Option.toOk("Unknown charset: ${name}")
+                            };
+                rd      <- Ok(toInputStream(bomIns) |> ins -> Basis/IO/InputStreamReader.newInputStreamReader(rc, ins, cs));
+                ans     <- Basis/IO/InputStreamReader.toReader(rd) |> Interop/Apache/Commons/IO/IOUtils.toStringFromReader;
+                _       <- Basis/IO/InputStreamReader.close!(rd)) 
+        yield ans
     }
 
     pub def bufferedReaderWithBOM(rc: Region[r], path: Path): Result[String, BufferedReader[r]] \ IO =
-        use Result.flatMap;
-        let* fis    = Basis/IO/FileInputStream.newWithPath(rc, path);
-        let bomIns  = Basis/IO/FileInputStream.toInputStream(fis) |> new(rc);
-        let* oname  = getBOMCharsetName(bomIns);
-        let* cs = match oname {
-            case None       => Basis/NIO/Charset/Charset.utf_16() |> Ok
-            case Some(name) => Basis/NIO/Charset/Charset.forName(name) |> Option.toOk("Unknown charset: ${name}")
-        };
-        let rd      = toInputStream(bomIns) |> ins -> Basis/IO/InputStreamReader.newInputStreamReader(rc, ins, cs);
-        let ans     = Basis/IO/InputStreamReader.toReader(rd) |> Basis/IO/BufferedReader.newWithReader(rc);
-        Ok(ans)
+        forM (fis       <- Basis/IO/FileInputStream.newWithPath(rc, path);
+                bomIns  <- Ok(Basis/IO/FileInputStream.toInputStream(fis) |> new(rc));
+                oname   <- getBOMCharsetName(bomIns);
+                cs      <- match oname {
+                                case None       => Basis/NIO/Charset/Charset.utf_16() |> Ok
+                                case Some(name) => Basis/NIO/Charset/Charset.forName(name) |> Option.toOk("Unknown charset: ${name}")
+                            };
+                rd      <- Ok(toInputStream(bomIns) |> ins -> Basis/IO/InputStreamReader.newInputStreamReader(rc, ins, cs));
+                ans     <- Ok(Basis/IO/InputStreamReader.toReader(rd) |> Basis/IO/BufferedReader.newWithReader(rc)))
+        yield ans
 
 }
