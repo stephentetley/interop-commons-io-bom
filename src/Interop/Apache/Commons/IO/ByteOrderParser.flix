@@ -16,10 +16,10 @@
 
 
 
-namespace Interop/Apache/Commons/IO/ByteOrderParser {
+mod Interop.Apache.Commons.IO.ByteOrderParser {
     
-    use Interop/NIO.ByteOrder;
-    use Interop/NIO.ByteOrder.{ByteOrder};
+    use Interop.NIO.ByteOrder;
+    use Interop.NIO.ByteOrder.{ByteOrder};
 
     pub def parseByteOrder(s: String): ByteOrder =
         import static org.apache.commons.io.ByteOrderParser.parseByteOrder(String): ##java.nio.ByteOrder \ {};

@@ -14,26 +14,26 @@
  * limitations under the License.
  */
 
-namespace TestByteOrderMark {
+mod TestByteOrderMark {
 
     @test
     def getCharsetName01(): Unit & Impure =
-        let name = Interop/Apache/Commons/IO/ByteOrderMark.utf_8() |> Interop/Apache/Commons/IO/ByteOrderMark.getCharsetName;
+        let name = Interop.Apache.Commons.IO.ByteOrderMark.utf_8() |> Interop.Apache.Commons.IO.ByteOrderMark.getCharsetName;
         println("getCharsetName01: ${name}")
 
     @test
     def length01(): Unit & Impure =
-        let len = Interop/Apache/Commons/IO/ByteOrderMark.utf_8() |> Interop/Apache/Commons/IO/ByteOrderMark.length;
+        let len = Interop.Apache.Commons.IO.ByteOrderMark.utf_8() |> Interop.Apache.Commons.IO.ByteOrderMark.length;
         println("length01: ${len}")
     
     @test
     def length02(): Unit & Impure =
-        let len = Interop/Apache/Commons/IO/ByteOrderMark.utf_16le() |> Interop/Apache/Commons/IO/ByteOrderMark.length;
+        let len = Interop.Apache.Commons.IO.ByteOrderMark.utf_16le() |> Interop.Apache.Commons.IO.ByteOrderMark.length;
         println("length02: ${len}")
 
     @test
     def toString01(): Unit & Impure =
-        let bom = Interop/Apache/Commons/IO/ByteOrderMark.utf_16le() |> Interop/Apache/Commons/IO/ByteOrderMark.toString;
+        let bom = Interop.Apache.Commons.IO.ByteOrderMark.utf_16le() |> Interop.Apache.Commons.IO.ByteOrderMark.toString;
         println("toString01: ${bom}")
 
 }

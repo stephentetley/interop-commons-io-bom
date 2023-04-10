@@ -15,56 +15,56 @@
  */
 
 
-namespace Jvm/Apache/Commons/IO {
+mod Jvm.Apache.Commons.IO {
 
-    pub type alias ByteOrderMark = Interop/Apache/Commons/IO.ByteOrderMark
+    pub type alias ByteOrderMark = Interop.Apache.Commons.IO.ByteOrderMark
 
 }
 
 
-namespace Jvm/Apache/Commons/IO/ByteOrderMark {
+mod Jvm.Apache.Commons.IO.ByteOrderMark {
     
-    use Jvm/Apache/Commons/IO.ByteOrderMark;
-    use Interop/Apache/Commons/IO.ByteOrderMark.{ByteOrderMark};
+    use Jvm.Apache.Commons.IO.ByteOrderMark;
+    use Interop.Apache.Commons.IO.ByteOrderMark.{ByteOrderMark};
 
 
     pub def utf_8(): ByteOrderMark = 
-        Interop/Apache/Commons/IO/ByteOrderMark.utf_8()
+        Interop.Apache.Commons.IO.ByteOrderMark.utf_8()
 
     pub def utf_16be(): ByteOrderMark = 
-        Interop/Apache/Commons/IO/ByteOrderMark.utf_16be()
+        Interop.Apache.Commons.IO.ByteOrderMark.utf_16be()
 
     pub def utf_16le(): ByteOrderMark = 
-        Interop/Apache/Commons/IO/ByteOrderMark.utf_16le()
+        Interop.Apache.Commons.IO.ByteOrderMark.utf_16le()
 
     pub def utf_32be(): ByteOrderMark = 
-        Interop/Apache/Commons/IO/ByteOrderMark.utf_32be()
+        Interop.Apache.Commons.IO.ByteOrderMark.utf_32be()
 
     pub def utf_32le(): ByteOrderMark = 
-        Interop/Apache/Commons/IO/ByteOrderMark.utf_32le()
+        Interop.Apache.Commons.IO.ByteOrderMark.utf_32le()
 
     pub def utf_bom(): Char = 
-        Interop/Apache/Commons/IO/ByteOrderMark.utf_bom()
+        Interop.Apache.Commons.IO.ByteOrderMark.utf_bom()
 
     pub def equals(x: ByteOrderMark, y: ByteOrderMark): Bool =
-        Interop/Apache/Commons/IO/ByteOrderMark.equals(x, y)
+        Interop.Apache.Commons.IO.ByteOrderMark.equals(x, y)
 
     pub def toString(bom: ByteOrderMark): String =
-        Interop/Apache/Commons/IO/ByteOrderMark.toString(bom)
+        Interop.Apache.Commons.IO.ByteOrderMark.toString(bom)
 
 
     pub def getCharsetName(bom: ByteOrderMark): String = 
-        Interop/Apache/Commons/IO/ByteOrderMark.getCharsetName(bom)
+        Interop.Apache.Commons.IO.ByteOrderMark.getCharsetName(bom)
 
     pub def length(bom: ByteOrderMark): Int32 = 
-        Interop/Apache/Commons/IO/ByteOrderMark.length(bom)
+        Interop.Apache.Commons.IO.ByteOrderMark.length(bom)
 
     pub def getBytes(r: Region[r], bom: ByteOrderMark): Array[Int8, r] \ Write(r) =
-        Interop/Apache/Commons/IO/ByteOrderMark.getBytes(r, bom)
+        Interop.Apache.Commons.IO.ByteOrderMark.getBytes(r, bom)
 
 
     pub def getAt(ix: Int32, bom: ByteOrderMark): Int32 =
-        Interop/Apache/Commons/IO/ByteOrderMark.getAt(ix, bom)
+        Interop.Apache.Commons.IO.ByteOrderMark.getAt(ix, bom)
 
 
 }

@@ -15,12 +15,12 @@
  */
 
 
-namespace Interop/Apache/Commons/IO/Input {
+mod Interop.Apache.Commons.IO.Input {
 
-    use Interop/IO.InputStream
-    use Interop/IO.InputStream.{InputStream}
-    use Interop/Apache/Commons/IO/Input.ProxyInputStream
-    use Interop/Apache/Commons/IO/Input.ProxyInputStream.{ProxyInputStream}
+    use Interop.IO.InputStream
+    use Interop.IO.InputStream.{InputStream}
+    use Interop.Apache.Commons.IO.Input.ProxyInputStream
+    use Interop.Apache.Commons.IO.Input.ProxyInputStream.{ProxyInputStream}
 
 
     pub enum ProxyInputStream[_: Region](##org.apache.commons.io.input.ProxyInputStream)
@@ -31,7 +31,7 @@ namespace Interop/Apache/Commons/IO/Input {
         pub def fromProxyInputStream[r: Region](s: ProxyInputStream[r]): t[r]
     }
 
-    instance Interop/IO.SubInputStream[ProxyInputStream] {
+    instance Interop.IO.SubInputStream[ProxyInputStream] {
         pub def toInputStream(s: ProxyInputStream[r]): InputStream[r] = 
             let ProxyInputStream(s1) = s;
             InputStream(unchecked_cast(s1 as ##java.io.InputStream))
@@ -44,15 +44,15 @@ namespace Interop/Apache/Commons/IO/Input {
 }
 
 
-namespace Interop/Apache/Commons/IO/Input/ProxyInputStream {
+mod Interop.Apache.Commons.IO.Input.ProxyInputStream {
     
-    use Interop/Apache/Commons/IO/Input.ProxyInputStream
-    use Interop/Apache/Commons/IO/Input.ProxyInputStream.{ProxyInputStream}
+    use Interop.Apache.Commons.IO.Input.ProxyInputStream
+    use Interop.Apache.Commons.IO.Input.ProxyInputStream.{ProxyInputStream}
 
-    use Interop/Apache/Commons/IO.ByteOrderMark
-    use Interop/Apache/Commons/IO.ByteOrderMark.{ByteOrderMark}
+    use Interop.Apache.Commons.IO.ByteOrderMark
+    use Interop.Apache.Commons.IO.ByteOrderMark.{ByteOrderMark}
 
-    use Interop/IO.InputStream
+    use Interop.IO.InputStream
 
     pub def getHH(ins: ProxyInputStream[r]): ##org.apache.commons.io.input.ProxyInputStream = 
         let ProxyInputStream(ins1) = ins;
@@ -66,7 +66,7 @@ namespace Interop/Apache/Commons/IO/Input/ProxyInputStream {
     /// Take a new region or use existing?
     pub def new(_: Region[r], ins: InputStream[r]): ProxyInputStream[r1] \ { Read(r), Write(r1) } =
         import new org.apache.commons.io.input.ProxyInputStream(##java.io.InputStream): ##org.apache.commons.io.input.ProxyInputStream \ {r, r1} as newProxyInputStream;
-        let ins1 = Interop/IO/InputStream.getHH(ins);
+        let ins1 = Interop.IO.InputStream.getHH(ins);
         newProxyInputStream(ins1) |>  ProxyInputStream
 
 

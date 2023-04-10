@@ -15,26 +15,26 @@
  */
 
 
-namespace Interop/Apache/Commons/IO {
+mod Interop.Apache.Commons.IO {
 
-    use Interop/Apache/Commons/IO.ByteOrderMark
-    use Interop/Apache/Commons/IO.ByteOrderMark.{ByteOrderMark}
+    use Interop.Apache.Commons.IO.ByteOrderMark
+    use Interop.Apache.Commons.IO.ByteOrderMark.{ByteOrderMark}
     
     pub enum ByteOrderMark(##org.apache.commons.io.ByteOrderMark)
 
     instance Eq[ByteOrderMark] {
-        pub def eq(x: ByteOrderMark, y: ByteOrderMark): Bool = Interop/Apache/Commons/IO/ByteOrderMark.equals(x, y)
+        pub def eq(x: ByteOrderMark, y: ByteOrderMark): Bool = Interop.Apache.Commons.IO.ByteOrderMark.equals(x, y)
     }
 
     instance ToString[ByteOrderMark] {
-        pub def toString(x: ByteOrderMark): String = Interop/Apache/Commons/IO/ByteOrderMark.toString(x)
+        pub def toString(x: ByteOrderMark): String = Interop.Apache.Commons.IO.ByteOrderMark.toString(x)
     }
     
     instance Hash[ByteOrderMark] {
-        pub def hash(x: ByteOrderMark): Int32 = Interop/Apache/Commons/IO/ByteOrderMark.hashCode(x)
+        pub def hash(x: ByteOrderMark): Int32 = Interop.Apache.Commons.IO.ByteOrderMark.hashCode(x)
     }
 
-    instance Interop/Flix.Marshal[ByteOrderMark] {
+    instance Interop.Flix.Marshal[ByteOrderMark] {
         pub def toJavaObject(x: ByteOrderMark): ##java.lang.Object =
             let ByteOrderMark(x1) = x;
             checked_cast(x1)
@@ -46,10 +46,10 @@ namespace Interop/Apache/Commons/IO {
 }
 
 
-namespace Interop/Apache/Commons/IO/ByteOrderMark {
+mod Interop.Apache.Commons.IO.ByteOrderMark {
     
-    use Interop/Apache/Commons/IO.ByteOrderMark
-    use Interop/Apache/Commons/IO.ByteOrderMark.{ByteOrderMark}
+    use Interop.Apache.Commons.IO.ByteOrderMark
+    use Interop.Apache.Commons.IO.ByteOrderMark.{ByteOrderMark}
 
     pub def getHH(bom: ByteOrderMark): ##org.apache.commons.io.ByteOrderMark =
         let ByteOrderMark(bom1) = bom;
