@@ -17,22 +17,22 @@
 mod TestByteOrderMark {
 
     @test
-    def getCharsetName01(): Unit & Impure =
+    def getCharsetName01(): Unit \ IO =
         let name = Interop.Apache.Commons.IO.ByteOrderMark.utf_8() |> Interop.Apache.Commons.IO.ByteOrderMark.getCharsetName;
         println("getCharsetName01: ${name}")
 
     @test
-    def length01(): Unit & Impure =
+    def length01(): Unit \ IO =
         let len = Interop.Apache.Commons.IO.ByteOrderMark.utf_8() |> Interop.Apache.Commons.IO.ByteOrderMark.length;
         println("length01: ${len}")
     
     @test
-    def length02(): Unit & Impure =
+    def length02(): Unit \ IO =
         let len = Interop.Apache.Commons.IO.ByteOrderMark.utf_16le() |> Interop.Apache.Commons.IO.ByteOrderMark.length;
         println("length02: ${len}")
 
     @test
-    def toString01(): Unit & Impure =
+    def toString01(): Unit \ IO =
         let bom = Interop.Apache.Commons.IO.ByteOrderMark.utf_16le() |> Interop.Apache.Commons.IO.ByteOrderMark.toString;
         println("toString01: ${bom}")
 

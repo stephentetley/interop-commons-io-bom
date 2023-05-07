@@ -107,7 +107,7 @@ mod Interop.Apache.Commons.IO.ByteOrderMark {
         length(bom1)
 
     pub def getBytes(_: Region[r], bom: ByteOrderMark): Array[Int8, r] \ Write(r) =
-        import org.apache.commons.io.ByteOrderMark.getBytes(): Array[Int8, r] & r;
+        import org.apache.commons.io.ByteOrderMark.getBytes(): Array[Int8, r] \ r;
         let ByteOrderMark(bom1) = bom;
         getBytes(bom1)
 

@@ -1,3 +1,7 @@
+### v0.2.2
+   Updated dependencies.
+   Removed & in signatures.
+
 ### v0.2.1
    Updated dependencies.
 
