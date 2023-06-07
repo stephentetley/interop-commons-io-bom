@@ -35,10 +35,10 @@ mod Jvm.Apache.Commons.IO.Input.BOMInputStream {
     use Jvm.Apache.Commons.IO.Input.BOMInputStream
     use Interop.Apache.Commons.IO.Input.ProxyInputStream
 
-    pub def new(rc: Region[r1], ins: InputStream[r]): BOMInputStream[r1] \ { Read(r), Write(r1) } = 
+    pub def new(rc: Region[r1], ins: InputStream[r]): BOMInputStream[r1] \ {r, r1} = 
         Interop.Apache.Commons.IO.Input.BOMInputStream.new(rc, ins)
 
-    pub def newBOMInputStream(rc: Region[r], p: Path, opts: List[OpenOption]): Result[String, BOMInputStream[r]] \ {IO, Write(r)} = 
+    pub def newBOMInputStream(rc: Region[r], p: Path, opts: List[OpenOption]): Result[String, BOMInputStream[r]] \ {IO, r} = 
         Basis.NIO.File.Files.newInputStream(rc, p, opts) |> Result.map(new(rc))
 
 
@@ -50,48 +50,48 @@ mod Jvm.Apache.Commons.IO.Input.BOMInputStream {
 
     // pub def newWithInclude[r: Region, stream: Region -> Type](_: Region[r], 
     //                                                             ins: stream[r], 
-    //                                                             incl: Bool): BOMInputStream[r] \ Write(r) with SubInputStream[stream] =
+    //                                                             incl: Bool): BOMInputStream[r] \ r with SubInputStream[stream] =
     //     import new org.apache.commons.io.input.BOMInputStream(##java.io.InputStream, Bool): ##org.apache.commons.io.input.BOMInputStream \ r as newBOMInputStream;
     //     let ins1 = Interop.IO.InputStream.getHH(Interop.IO.SubInputStream.toInputStream(ins));
     //     BOMInputStream(newBOMInputStream(ins1, incl))
 
-    pub def getBOM(ins: BOMInputStream[r]): Result[String, Option[ByteOrderMark]] \ Read(r) = 
+    pub def getBOM(ins: BOMInputStream[r]): Result[String, Option[ByteOrderMark]] \ r = 
         Interop.Apache.Commons.IO.Input.BOMInputStream.getBOM(ins)
 
-    pub def getBOMCharsetName(ins: BOMInputStream[r]): Result[String, Option[String]] \ Read(r) = 
+    pub def getBOMCharsetName(ins: BOMInputStream[r]): Result[String, Option[String]] \ r = 
         Interop.Apache.Commons.IO.Input.BOMInputStream.getBOMCharsetName(ins)
 
-    pub def hasBOM(ins: BOMInputStream[r]): Result[String, Bool] \ Read(r) = 
+    pub def hasBOM(ins: BOMInputStream[r]): Result[String, Bool] \ r = 
         Interop.Apache.Commons.IO.Input.BOMInputStream.hasBOM(ins)
 
-    pub def available(ins: BOMInputStream[r]): Result[String, Int32] \ Read(r) = 
+    pub def available(ins: BOMInputStream[r]): Result[String, Int32] \ r = 
         toProxyInputStream(ins) |> Interop.Apache.Commons.IO.Input.ProxyInputStream.available
 
 
-    pub def mark!(limit: Int32, ins: BOMInputStream[r]): Unit \ Write(r) = 
+    pub def mark!(limit: Int32, ins: BOMInputStream[r]): Unit \ r = 
         Interop.Apache.Commons.IO.Input.BOMInputStream.mark!(limit, ins)
 
 
-    pub def markSupported(ins: BOMInputStream[r]): Bool \ Read(r) = 
+    pub def markSupported(ins: BOMInputStream[r]): Bool \ r = 
         toProxyInputStream(ins) |> Interop.Apache.Commons.IO.Input.ProxyInputStream.markSupported
 
 
-    pub def read!(ins: BOMInputStream[r]): Result[String, Int32] \ {Read(r), Write(r)} = 
+    pub def read!(ins: BOMInputStream[r]): Result[String, Int32] \ r = 
         Interop.Apache.Commons.IO.Input.BOMInputStream.read!(ins)
 
 
-    pub def reset!(ins: BOMInputStream[r]): Result[String, Unit] \ Write(r) =
+    pub def reset!(ins: BOMInputStream[r]): Result[String, Unit] \ r =
         Interop.Apache.Commons.IO.Input.BOMInputStream.reset!(ins)
 
-    pub def skip!(n: Int64, ins: BOMInputStream[r]): Result[String, Int64] \ Write(r) = 
+    pub def skip!(n: Int64, ins: BOMInputStream[r]): Result[String, Int64] \ r = 
         Interop.Apache.Commons.IO.Input.BOMInputStream.skip!(n, ins)
 
 
-    pub def close!(ins: BOMInputStream[r]): Result[String, Unit] \ Write(r) = 
+    pub def close!(ins: BOMInputStream[r]): Result[String, Unit] \ r = 
         toProxyInputStream(ins) |> Interop.Apache.Commons.IO.Input.ProxyInputStream.close!
 
     /// Get remaining input...
-    pub def getString(cs: Charset, ins: BOMInputStream[r]): Result[String, String] \ Read(r) = 
+    pub def getString(cs: Charset, ins: BOMInputStream[r]): Result[String, String] \ r = 
         let ins1 = Interop.IO.SubInputStream.toInputStream(ins);
         Interop.Apache.Commons.IO.IOUtils.toStringFromInputStream(ins1, cs)
 

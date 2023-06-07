@@ -64,7 +64,7 @@ mod Interop.Apache.Commons.IO.Input.ProxyInputStream {
 
 
     /// Take a new region or use existing?
-    pub def new(_: Region[r], ins: InputStream[r]): ProxyInputStream[r1] \ { Read(r), Write(r1) } =
+    pub def new(_: Region[r], ins: InputStream[r]): ProxyInputStream[r1] \ {r, r1} =
         import new org.apache.commons.io.input.ProxyInputStream(##java.io.InputStream): ##org.apache.commons.io.input.ProxyInputStream \ {r, r1} as newProxyInputStream;
         let ins1 = Interop.IO.InputStream.getHH(ins);
         newProxyInputStream(ins1) |>  ProxyInputStream
@@ -73,48 +73,48 @@ mod Interop.Apache.Commons.IO.Input.ProxyInputStream {
         
 
 
-    pub def mark!(limit: Int32, ins: ProxyInputStream[r]): Unit \ Write(r) = 
+    pub def mark!(limit: Int32, ins: ProxyInputStream[r]): Unit \ r = 
         import org.apache.commons.io.input.ProxyInputStream.mark(Int32): Unit \ r;
         let ProxyInputStream(ins1) = ins;
         mark(ins1, limit)
 
 
-    pub def available(ins: ProxyInputStream[r]): Result[String, Int32] \ Read(r) = 
+    pub def available(ins: ProxyInputStream[r]): Result[String, Int32] \ r = 
         Result.tryCatch(_ -> {
             import org.apache.commons.io.input.ProxyInputStream.available(): Int32 \ r;
             let ProxyInputStream(ins1) = ins;
             available(ins1)
         })
 
-    pub def markSupported(ins: ProxyInputStream[r]): Bool \ Read(r) = 
+    pub def markSupported(ins: ProxyInputStream[r]): Bool \ r = 
         import org.apache.commons.io.input.ProxyInputStream.markSupported(): Bool \ r;
         let ProxyInputStream(ins1) = ins;
         markSupported(ins1)
 
 
     /// -1 for end-of-stream
-    pub def read!(ins: ProxyInputStream[r]): Result[String, Int32] \ Read(r) = 
+    pub def read!(ins: ProxyInputStream[r]): Result[String, Int32] \ r = 
         Result.tryCatch(_ -> {
             import org.apache.commons.io.input.ProxyInputStream.read(): Int32 \ r;
             let ProxyInputStream(ins1) = ins;
             read(ins1)
         })
 
-    pub def reset!(ins: ProxyInputStream[r]): Result[String, Unit] \ Write(r) = 
+    pub def reset!(ins: ProxyInputStream[r]): Result[String, Unit] \ r = 
         Result.tryCatch(_ -> {
             import org.apache.commons.io.input.ProxyInputStream.reset(): Unit \ r;
             let ProxyInputStream(ins1) = ins;
             reset(ins1)
         })
 
-    pub def skip!(n: Int64, ins: ProxyInputStream[r]): Result[String, Int64] \ Write(r) = 
+    pub def skip!(n: Int64, ins: ProxyInputStream[r]): Result[String, Int64] \ r = 
         Result.tryCatch(_ -> {
             import org.apache.commons.io.input.ProxyInputStream.skip(Int64): Int64 \ r;
             let ProxyInputStream(ins1) = ins;
             skip(ins1, n)
         })
 
-    pub def close!(ins: ProxyInputStream[r]): Result[String, Unit] \ Write(r) = 
+    pub def close!(ins: ProxyInputStream[r]): Result[String, Unit] \ r = 
         Result.tryCatch(_ -> {
             import org.apache.commons.io.input.ProxyInputStream.close(): Unit \ r;
             let ProxyInputStream(ins1) = ins;

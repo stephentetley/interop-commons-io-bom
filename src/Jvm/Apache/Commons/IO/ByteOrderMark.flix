@@ -59,7 +59,7 @@ mod Jvm.Apache.Commons.IO.ByteOrderMark {
     pub def length(bom: ByteOrderMark): Int32 = 
         Interop.Apache.Commons.IO.ByteOrderMark.length(bom)
 
-    pub def getBytes(r: Region[r], bom: ByteOrderMark): Array[Int8, r] \ Write(r) =
+    pub def getBytes(r: Region[r], bom: ByteOrderMark): Array[Int8, r] \ r =
         Interop.Apache.Commons.IO.ByteOrderMark.getBytes(r, bom)
 
 

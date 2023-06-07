@@ -69,18 +69,18 @@ mod Interop.Apache.Commons.IO.Input.BOMInputStream {
 
 
     /// Take a new region...
-    pub def new(_: Region[r1], ins: InputStream[r]): BOMInputStream[r1] \ { Read(r), Write(r1) } =
+    pub def new(_: Region[r1], ins: InputStream[r]): BOMInputStream[r1] \ {r, r1} =
         import new org.apache.commons.io.input.BOMInputStream(##java.io.InputStream): ##org.apache.commons.io.input.BOMInputStream \ {r, r1} as newBOMInputStream;
         let ins1 = Interop.IO.InputStream.getHH(ins);
         BOMInputStream(newBOMInputStream(ins1))
 
 
-    pub def newWithInclude(_: Region[r1], includeBOM: Bool, ins: InputStream[r]): BOMInputStream[r1] \ { Read(r), Write(r1) } =
+    pub def newWithInclude(_: Region[r1], includeBOM: Bool, ins: InputStream[r]): BOMInputStream[r1] \ {r, r1} =
         import new org.apache.commons.io.input.BOMInputStream(##java.io.InputStream, Bool): ##org.apache.commons.io.input.BOMInputStream \ {r, r1} as newBOMInputStream;
         let ins1 = Interop.IO.InputStream.getHH(ins);
         BOMInputStream(newBOMInputStream(ins1, includeBOM))
 
-    pub def getBOM(ins: BOMInputStream[r]): Result[String, Option[ByteOrderMark]] \ Read(r) = 
+    pub def getBOM(ins: BOMInputStream[r]): Result[String, Option[ByteOrderMark]] \ r = 
         Result.tryCatch(_ -> {
             import org.apache.commons.io.input.BOMInputStream.getBOM(): ##org.apache.commons.io.ByteOrderMark \ r;
             let BOMInputStream(ins1) = ins;
@@ -88,14 +88,14 @@ mod Interop.Apache.Commons.IO.Input.BOMInputStream {
         })
         
 
-    pub def getBOMCharsetName(ins: BOMInputStream[r]): Result[String, Option[String]] \ Read(r) = 
+    pub def getBOMCharsetName(ins: BOMInputStream[r]): Result[String, Option[String]] \ r = 
         Result.tryCatch(_ -> {
             import org.apache.commons.io.input.BOMInputStream.getBOMCharsetName(): String \ r;
             let BOMInputStream(ins1) = ins;
             getBOMCharsetName(ins1) |> Object.toOption
         })
         
-    pub def hasBOM(ins: BOMInputStream[r]): Result[String, Bool] \ Read(r) = 
+    pub def hasBOM(ins: BOMInputStream[r]): Result[String, Bool] \ r = 
         Result.tryCatch(_ -> {
             import org.apache.commons.io.input.BOMInputStream.hasBOM(): Bool \ r;
             let BOMInputStream(ins1) = ins;
@@ -103,27 +103,27 @@ mod Interop.Apache.Commons.IO.Input.BOMInputStream {
         })
 
 
-    pub def mark!(limit: Int32, ins: BOMInputStream[r]): Unit \ Write(r) = 
+    pub def mark!(limit: Int32, ins: BOMInputStream[r]): Unit \ r = 
         import org.apache.commons.io.input.BOMInputStream.mark(Int32): Unit \ r;
         let BOMInputStream(ins1) = ins;
         mark(ins1, limit)
 
     /// -1 for end-of-stream
-    pub def read!(ins: BOMInputStream[r]): Result[String, Int32] \ {Read(r), Write(r) } = 
+    pub def read!(ins: BOMInputStream[r]): Result[String, Int32] \ r = 
         Result.tryCatch(_ -> {
             import org.apache.commons.io.input.BOMInputStream.read(): Int32 \ r;
             let BOMInputStream(ins1) = ins;
             read(ins1)
         })
 
-    pub def reset!(ins: BOMInputStream[r]): Result[String, Unit] \ Write(r) = 
+    pub def reset!(ins: BOMInputStream[r]): Result[String, Unit] \ r = 
         Result.tryCatch(_ -> {
             import org.apache.commons.io.input.BOMInputStream.reset(): Unit \ r;
             let BOMInputStream(ins1) = ins;
             reset(ins1)
         })
 
-    pub def skip!(n: Int64, ins: BOMInputStream[r]): Result[String, Int64] \ Write(r) = 
+    pub def skip!(n: Int64, ins: BOMInputStream[r]): Result[String, Int64] \ r = 
         Result.tryCatch(_ -> {
             import org.apache.commons.io.input.BOMInputStream.skip(Int64): Int64 \ r;
             let BOMInputStream(ins1) = ins;

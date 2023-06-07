@@ -21,7 +21,7 @@ mod Interop.Apache.Commons.IO.IOUtils {
     use Interop.IO.Reader
     use Interop.NIO.Charset.Charset
 
-    pub def toStringFromInputStream(s: InputStream[r], cs: Charset): Result[String, String] \ Read(r) = 
+    pub def toStringFromInputStream(s: InputStream[r], cs: Charset): Result[String, String] \ r = 
         Result.tryCatch(_ -> {
             import static org.apache.commons.io.IOUtils.toString(##java.io.InputStream, ##java.nio.charset.Charset): String \ r;
             let s1 = Interop.IO.InputStream.getHH(s);
@@ -29,7 +29,7 @@ mod Interop.Apache.Commons.IO.IOUtils {
             toString(s1, cs1)
         })
 
-    pub def toStringFromReader(rd: Reader[r]): Result[String, String] \ Read(r) = 
+    pub def toStringFromReader(rd: Reader[r]): Result[String, String] \ r = 
         Result.tryCatch(_ -> {
             import static org.apache.commons.io.IOUtils.toString(##java.io.Reader): String \ r;
             let rd1 = Interop.IO.Reader.getHH(rd);
