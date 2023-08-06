@@ -34,13 +34,10 @@ mod Interop.Apache.Commons.IO {
         pub def hash(x: ByteOrderMark): Int32 = Interop.Apache.Commons.IO.ByteOrderMark.hashCode(x)
     }
 
-    instance Interop.Flix.Marshal[ByteOrderMark] {
+    instance Interop.Flix.GoesToJava[ByteOrderMark] {
         pub def toJavaObject(x: ByteOrderMark): ##java.lang.Object =
             let ByteOrderMark(x1) = x;
             checked_cast(x1)
-
-        pub def fromJavaObject(o: ##java.lang.Object): ByteOrderMark = 
-            ByteOrderMark(unchecked_cast(o as ##org.apache.commons.io.ByteOrderMark))
     }
 
 }
@@ -55,6 +52,8 @@ mod Interop.Apache.Commons.IO.ByteOrderMark {
         let ByteOrderMark(bom1) = bom;
         bom1
 
+    pub def fromJavaObject(o: ##java.lang.Object): ByteOrderMark = 
+        ByteOrderMark(unchecked_cast(o as ##org.apache.commons.io.ByteOrderMark))
 
     pub def utf_8(): ByteOrderMark = 
         import static get org.apache.commons.io.ByteOrderMark.UTF_8: ##org.apache.commons.io.ByteOrderMark \ {} as get_UTF_8;
