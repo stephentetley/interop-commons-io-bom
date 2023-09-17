@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Stephen Tetley
+ * Copyright 2022 Stephen Tetley
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,70 +15,35 @@
  */
 
 
-mod Interop.Apache.Commons.IO.Input {
-
-    use Interop.IO.InputStream
-    use Interop.IO.InputStream.{InputStream}
-    use Interop.Apache.Commons.IO.Input.ProxyInputStream
-    use Interop.Apache.Commons.IO.Input.ProxyInputStream.{ProxyInputStream}
-    use Interop.Apache.Commons.IO.Input.BOMInputStream
-    use Interop.Apache.Commons.IO.Input.BOMInputStream.{BOMInputStream}
+mod Apache.Commons.IO.Input {
 
     pub enum BOMInputStream[_: Region](##org.apache.commons.io.input.BOMInputStream)
-
-
-    instance Interop.IO.SubInputStream[BOMInputStream] {
-        pub def toInputStream(s: BOMInputStream[r]): InputStream[r] = 
-            let BOMInputStream(s1) = s;
-            InputStream(unchecked_cast(s1 as ##java.io.InputStream))
-
-        pub def fromInputStream(s: InputStream[r]): BOMInputStream[r] = 
-            let InputStream(s1) = s;
-            BOMInputStream(unchecked_cast(s1 as ##org.apache.commons.io.input.BOMInputStream))
-    }
-
-    instance Interop.Apache.Commons.IO.Input.SubProxyInputStream[BOMInputStream] {
-        pub def toProxyInputStream(s: BOMInputStream[r]): ProxyInputStream[r] = 
-            let BOMInputStream(s1) = s;
-            ProxyInputStream(unchecked_cast(s1 as ##org.apache.commons.io.input.ProxyInputStream))
-
-        pub def fromProxyInputStream(s: ProxyInputStream[r]): BOMInputStream[r] = 
-            let ProxyInputStream(s1) = s;
-            BOMInputStream(unchecked_cast(s1 as ##org.apache.commons.io.input.BOMInputStream))
-    }
-
 }
 
 
-mod Interop.Apache.Commons.IO.Input.BOMInputStream {
+mod Apache.Commons.IO.Input.BOMInputStream {
     
-    use Interop.Apache.Commons.IO.Input.BOMInputStream
-    use Interop.Apache.Commons.IO.Input.BOMInputStream.{BOMInputStream}
+    use Apache.Commons.IO.Input.BOMInputStream
+    use Apache.Commons.IO.Input.BOMInputStream.{BOMInputStream}
 
-    use Interop.Apache.Commons.IO.ByteOrderMark
-    use Interop.Apache.Commons.IO.ByteOrderMark.{ByteOrderMark}
+    use Apache.Commons.IO.ByteOrderMark
+    use Apache.Commons.IO.ByteOrderMark.{ByteOrderMark}
 
-    use Interop.IO.InputStream
-
-    pub def getHH(ins: BOMInputStream[r]): ##org.apache.commons.io.input.BOMInputStream = 
-        let BOMInputStream(ins1) = ins;
-        ins1
-
-    pub def wrapHH(_: Region[r], prim: ##org.apache.commons.io.input.BOMInputStream): BOMInputStream[r] =
-        BOMInputStream(prim)
+    use Basis.IO.InputStream
+    use Basis.IO.InputStream.{InputStream}
 
 
-    /// Take a new region...
-    pub def new(_: Region[r1], ins: InputStream[r]): BOMInputStream[r1] \ {r, r1} =
+    /// Takes a new region...
+    pub def new(_: Region[r1], s: InputStream[r]): BOMInputStream[r1] \ {r, r1} =
         import new org.apache.commons.io.input.BOMInputStream(##java.io.InputStream): ##org.apache.commons.io.input.BOMInputStream \ {r, r1} as newBOMInputStream;
-        let ins1 = Interop.IO.InputStream.getHH(ins);
-        BOMInputStream(newBOMInputStream(ins1))
+        let InputStream(s1) = s;
+        BOMInputStream(newBOMInputStream(s1))
 
 
-    pub def newWithInclude(_: Region[r1], includeBOM: Bool, ins: InputStream[r]): BOMInputStream[r1] \ {r, r1} =
+    pub def newWithInclude(_: Region[r1], includeBOM: Bool, s: InputStream[r]): BOMInputStream[r1] \ {r, r1} =
         import new org.apache.commons.io.input.BOMInputStream(##java.io.InputStream, Bool): ##org.apache.commons.io.input.BOMInputStream \ {r, r1} as newBOMInputStream;
-        let ins1 = Interop.IO.InputStream.getHH(ins);
-        BOMInputStream(newBOMInputStream(ins1, includeBOM))
+        let InputStream(s1) = s;
+        BOMInputStream(newBOMInputStream(s1, includeBOM))
 
     pub def getBOM(ins: BOMInputStream[r]): Result[String, Option[ByteOrderMark]] \ r = 
         Result.tryCatch(_ -> {

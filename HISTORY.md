@@ -1,3 +1,8 @@
+### v0.4.0
+   Changed dependencies to use `charset-locale` and `platform-basis`.
+   Changed namespace to start with `Apache.Commons.IO`.
+   Internals changed to use one file per wrapped Java module rather than have a low-level "internal" wrapper and high-level "public" module.
+
 ### v0.3.1
    Updated dependencies.
 

@@ -15,12 +15,14 @@
  */
 
 
-mod Jvm.Apache.Commons.IO.ByteOrderParser {
+
+mod Apache.Commons.IO.ByteOrderParser {
     
-    use Basis.NIO.ByteOrder.ByteOrder;
+    use Basis.IO.ByteOrder
 
     pub def parseByteOrder(s: String): ByteOrder =
-        Interop.Apache.Commons.IO.ByteOrderParser.parseByteOrder(s) |> Basis.NIO.ByteOrder.unmarshallByteOrder
+        import static org.apache.commons.io.ByteOrderParser.parseByteOrder(String): ##java.nio.ByteOrder \ {};
+        parseByteOrder(s) |> Basis.IO.ByteOrder.byteOrderFromJava
 
 
 }

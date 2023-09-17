@@ -15,25 +15,28 @@
  */
 
 
-mod Interop.Apache.Commons.IO.IOUtils {
+mod Apache.Commons.IO.IOUtils {
     
-    use Interop.IO.InputStream
-    use Interop.IO.Reader
-    use Interop.NIO.Charset.Charset
+    use Charset.{Charset}
 
-    pub def toStringFromInputStream(s: InputStream[r], cs: Charset): Result[String, String] \ r = 
+    use Basis.IO.InputStream
+    use Basis.IO.InputStream.{InputStream}
+    use Basis.IO.Reader
+    use Basis.IO.Reader.{Reader}
+
+    pub def toStringFromInputStream(cs: Charset, s: InputStream[r]): Result[String, String] \ r = 
         Result.tryCatch(_ -> {
             import static org.apache.commons.io.IOUtils.toString(##java.io.InputStream, ##java.nio.charset.Charset): String \ r;
-            let s1 = Interop.IO.InputStream.getHH(s);
-            let cs1 = Interop.NIO.Charset.Charset.getHH(cs);
+            let InputStream(s1) = s;
+            let Charset(cs1) = cs;
             toString(s1, cs1)
         })
 
-    pub def toStringFromReader(rd: Reader[r]): Result[String, String] \ r = 
+    pub def toStringFromReader(r: Reader[r]): Result[String, String] \ r = 
         Result.tryCatch(_ -> {
             import static org.apache.commons.io.IOUtils.toString(##java.io.Reader): String \ r;
-            let rd1 = Interop.IO.Reader.getHH(rd);
-            toString(rd1)
+            let Reader(r1) = r;
+            toString(r1)
         })
 
 }

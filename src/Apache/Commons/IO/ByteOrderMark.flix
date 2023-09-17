@@ -15,45 +15,40 @@
  */
 
 
-mod Interop.Apache.Commons.IO {
+mod Apache.Commons.IO {
 
-    use Interop.Apache.Commons.IO.ByteOrderMark
-    use Interop.Apache.Commons.IO.ByteOrderMark.{ByteOrderMark}
+    use Apache.Commons.IO.ByteOrderMark
+    use Apache.Commons.IO.ByteOrderMark.{ByteOrderMark}
     
     pub enum ByteOrderMark(##org.apache.commons.io.ByteOrderMark)
 
     instance Eq[ByteOrderMark] {
-        pub def eq(x: ByteOrderMark, y: ByteOrderMark): Bool = Interop.Apache.Commons.IO.ByteOrderMark.equals(x, y)
+        pub def eq(x: ByteOrderMark, y: ByteOrderMark): Bool = Apache.Commons.IO.ByteOrderMark.equals(x, y)
     }
 
     instance ToString[ByteOrderMark] {
-        pub def toString(x: ByteOrderMark): String = Interop.Apache.Commons.IO.ByteOrderMark.toString(x)
+        pub def toString(x: ByteOrderMark): String = Apache.Commons.IO.ByteOrderMark.toString(x)
     }
     
     instance Hash[ByteOrderMark] {
-        pub def hash(x: ByteOrderMark): Int32 = Interop.Apache.Commons.IO.ByteOrderMark.hashCode(x)
+        pub def hash(x: ByteOrderMark): Int32 = Apache.Commons.IO.ByteOrderMark.hashCode(x)
     }
 
-    instance Interop.Flix.GoesToJava[ByteOrderMark] {
-        pub def toJavaObject(x: ByteOrderMark): ##java.lang.Object =
-            let ByteOrderMark(x1) = x;
-            checked_cast(x1)
+    instance ToJava[ByteOrderMark] {
+        type O = ##org.apache.commons.io.ByteOrderMark
+        pub def toJava(m: ByteOrderMark): ##org.apache.commons.io.ByteOrderMark \ IO = 
+            let ByteOrderMark(m1) = m;
+            checked_ecast(m1)
     }
 
 }
 
 
-mod Interop.Apache.Commons.IO.ByteOrderMark {
+mod Apache.Commons.IO.ByteOrderMark {
     
-    use Interop.Apache.Commons.IO.ByteOrderMark
-    use Interop.Apache.Commons.IO.ByteOrderMark.{ByteOrderMark}
+    use Apache.Commons.IO.ByteOrderMark
+    use Apache.Commons.IO.ByteOrderMark.{ByteOrderMark}
 
-    pub def getHH(bom: ByteOrderMark): ##org.apache.commons.io.ByteOrderMark =
-        let ByteOrderMark(bom1) = bom;
-        bom1
-
-    pub def fromJavaObject(o: ##java.lang.Object): ByteOrderMark = 
-        ByteOrderMark(unchecked_cast(o as ##org.apache.commons.io.ByteOrderMark))
 
     pub def utf_8(): ByteOrderMark = 
         import static get org.apache.commons.io.ByteOrderMark.UTF_8: ##org.apache.commons.io.ByteOrderMark \ {} as get_UTF_8;
