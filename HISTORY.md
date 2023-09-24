@@ -1,3 +1,6 @@
+### v0.4.1
+   Updated `platform-basis` dependency.
+   
 ### v0.4.0
    Changed dependencies to use `charset-locale` and `platform-basis`.
    Changed namespace to start with `Apache.Commons.IO`.
